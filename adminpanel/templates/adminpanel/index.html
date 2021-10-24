@@ -1,12 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-</head>
-<body>
-    {{title}}
-</body>
-</html>
+{% extends 'adminpanel/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                Последнее обновление дампа БД от 2021.23.10 12-23-45
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Дата начало</label>
+                                <input type="data" class="form-control">
+                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Дата конец</label>
+                                <input type="data" class="form-control">
+                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Просмотреть</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Дата начало</label>
+                                <input type="data" class="form-control">
+                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Дата конец</label>
+                                <input type="data" class="form-control">
+                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Импорт</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'adminpanel/img/exel.png' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button">Импорт</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'adminpanel/img/json.png' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button">Импорт</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
