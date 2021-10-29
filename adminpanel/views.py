@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 
 from services.getapijson.getapijson import Wretline_json
 
+import json
+
 
 class Account_page(View):
     """Представление админ панели"""
@@ -23,9 +25,9 @@ class Dump_json_page(View):
     @login_required
     def get(request, *args, **kwargs) -> render:
         template = 'adminpanel/dump_json.html'
-        users = Wretline_json.managers_json()
+        users = Wretline_json.orders_json()
         context = {
             'title': 'AZ23RU',
-            'users': users['resellerId'],
+            'users': users,
         }
         return render(request, template, context)

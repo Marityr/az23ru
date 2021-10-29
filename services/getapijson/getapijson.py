@@ -16,26 +16,26 @@ class Wretline_json:
         USER_API = os.getenv('USER_API')
         PASSWORD_API = os.getenv('PASSWORD_API')
 
-        conect_url = f"https://{HOST_API}/cp/{table}?userlogin={USER_API}&userpsw={PASSWORD_API}&limit=1"
+        conect_url = f"https://{HOST_API}/cp/{table}?userlogin={USER_API}&userpsw={PASSWORD_API}&limit=10"
 
         return conect_url
 
 
-    def orders_json() -> str:
+    def orders_json() -> list:
         """Получаем json заказов"""
 
         response = requests.get(Wretline_json.connect_api('orders'))
         datajson = response.json()
         return datajson
 
-    def users_json() -> str:
+    def users_json() -> list:
         """Получаем json покупателей"""
 
         response = requests.get(Wretline_json.connect_api('users'))
         datajson = response.json()
         return datajson
     
-    def managers_json() -> str:
+    def managers_json() -> list:
         """Получаем json менеджеров"""
         
         response = requests.get(Wretline_json.connect_api('managers'))
