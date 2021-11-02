@@ -5,7 +5,7 @@ from django.utils import timezone
 
 
 class Dump_json(models.Model):
-    '''Модель для хранения json запросов'''
+    """Модель для хранения json запросов"""
 
     orders_json = TextField(verbose_name='Заказы')
     users_json = TextField(verbose_name='Покупатели')
@@ -17,7 +17,23 @@ class Dump_json(models.Model):
     class Meta:
         verbose_name_plural = 'Дамп Json'
         verbose_name = 'Дамп Json'
-        ordering = ('published',)
+        ordering = ('-id',)
 
     def __int__(self) -> int:
         return self.id
+
+
+class Orders(models.Model):
+    """Модель общих данных заказов"""
+
+    pass
+    # number
+    # id_manager
+    # data_orders
+    # price
+    # paid
+    # debt
+    # name_client
+    # phone
+    # update_date
+    # manager

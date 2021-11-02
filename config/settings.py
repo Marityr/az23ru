@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'mathfilters',
+
     'blog.apps.BlogConfig',
     'adminpanel.apps.AdminpanelConfig',
 ]

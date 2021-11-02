@@ -1,8 +1,42 @@
 {% extends 'adminpanel/base.html' %}
-
+{% load mathfilters %}
 
 {% block content %}
 
+<table>
+    <thead>
+        <th>№ orders</th>
+        <th>ID manager</th>
+        <th>Data orders</th>
+        <th>All price</th>
+        <th>Paid</th>
+        <th>Debt</th>
+        <th>Name Client</th>
+        <th>Phone</th>
+    </thead>
+    <tbody>
+        {% for order in table %}
+        <tr>
+            <td>{{ order.number }}</td>
+            <td>{{ order.managerId }}</td>
+            <td>{{ order.date }}</td>
+            <td>{{ order.sum }}</td>
+            <td>{{ order.sum|sub:order.debt|floatformat:'0' }}</td>
+            <td>{{ order.debt|floatformat:'0' }}</td>
+            <th>{{ order.userName }}</th>
+            <td>{{ order.mobile }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<style>
+    th,
+    td {
+        padding: 5px;
+        border: 1px solid;
+        font-size: 12px !important;
+    }
+</style>
 {% endblock content %}
 <!-- <table>
     <tr>
@@ -28,11 +62,4 @@
         {% endfor %}
     {% endfor %}
 </table>
-<style>
-    th,
-    td {
-        padding: 5px;
-        border: 1px solid;
-        font-size: 12px !important;
-    }
-</style> -->
+ -->

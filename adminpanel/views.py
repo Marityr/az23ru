@@ -33,16 +33,14 @@ class Dump_json_page(View):
 
 
 class Table_page(View):
-    """Запись Json в БД"""
+    """Отображение Json"""
 
     @staticmethod
     @login_required
     def get(request, *args, **kwargs) -> render:
         template = 'adminpanel/table.html'
-        #orders = list_json()
-        list_json()
         context = {
             'title': 'AZ23RU',
-            'order': "1",
+            'table': list_json(),
         }
         return render(request, template, context)

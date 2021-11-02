@@ -3,6 +3,7 @@ autopep8==1.6.0
 certifi==2021.10.8
 charset-normalizer==2.0.7
 Django==3.2.8
+django-mathfilters==1.0.0
 idna==3.3
 pycodestyle==2.8.0
 pydantic==1.8.2
