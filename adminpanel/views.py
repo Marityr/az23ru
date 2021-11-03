@@ -24,6 +24,7 @@ class Dump_json_page(View):
     def get(request, *args, **kwargs) -> render:
         template = 'adminpanel/dump_json.html'
         Json_joob.save_users_db()
+        Json_joob.save_manager_db()
         context = {
             'title': 'AZ23RU',
             'content': "Дамп сохранен",

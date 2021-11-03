@@ -84,3 +84,19 @@ class Users_shop(models.Model):
 
     def __int__(self) -> int:
         return self.id
+
+
+class Managers_shop(models.Model):
+    """Данные менеджера магазина"""
+
+    id_manager = CharField(max_length=10, verbose_name='ИД менеджера')
+    name = CharField(max_length=100, verbose_name='Ф.И.О')
+    mobile = CharField(max_length=20, verbose_name='Номер телефона')
+
+    class Meta:
+        verbose_name_plural = 'Менеджер'
+        verbose_name = 'Менеджеры'
+        ordering = ('-id',)
+
+    def __int__(self) -> int:
+        return self.id
