@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.decorators import login_required
 
-from services.dumpjson.dumpjson import save_dump
+from services.dumpjson.dumpjson import Json_joob
 from services.listjson.listjson import list_json
 
 
@@ -24,7 +24,7 @@ class Dump_json_page(View):
     @login_required
     def get(request, *args, **kwargs) -> render:
         template = 'adminpanel/dump_json.html'
-        save_dump()
+        Json_joob.save_db()
         context = {
             'title': 'AZ23RU',
             'content': "Дамп сохранен",

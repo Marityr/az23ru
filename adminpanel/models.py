@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.fields import TextField
+from django.db.models.fields import CharField, TextField, DateTimeField
 
 from django.utils import timezone
 
@@ -24,16 +24,58 @@ class Dump_json(models.Model):
 
 
 class Orders(models.Model):
-    """Модель общих данных заказов"""
+    """Данные заказа"""
+
+    number = CharField(max_length=10, verbose_name='Номер заказа')     
+    id_manager = CharField(max_length=10, verbose_name='ID менеджера')    
+    data_orders = DateTimeField(verbose_name='Дата заказа')    
+    price = CharField(max_length=10, verbose_name='Сумма заказа')
+    paid = CharField(max_length=10, verbose_name='Оплачено')
+    debt = CharField(max_length=10, verbose_name='Долг')
+    name_client = CharField(max_length=50, verbose_name='Имя клиента')
+    phone = CharField(max_length=10, verbose_name='Телефон')
+    update_date = DateTimeField(verbose_name='Дата обновления')
+    manager = CharField(max_length=50, verbose_name='Менеджер')
+
+    class Meta:
+        verbose_name_plural = 'Заказ'
+        verbose_name = 'Заказы'
+        ordering = ('-id',)
+
+    def __int__(self) -> int:
+        return self.id
+
+
+class Product(models.Model):
+    """Позиции заказа"""
+
+    number_order = CharField(max_length=10, verbose_name='Номер заказа')
+    status = CharField(max_length=50, verbose_name='Статус')
+    descriptions = CharField(max_length=250, verbose_name='Описание')
+    brand = CharField(max_length=50, verbose_name='Бранд')
+    article = CharField(max_length=50, verbose_name='Артикул')
+    quantity = CharField(max_length=10, verbose_name='Кличество')
+    price_product = CharField(max_length=10, verbose_name='Цена продажи')
+    date_deadline = DateTimeField(verbose_name='Дата отгрузки')
+    distributor = CharField(max_length=50, verbose_name='Дистрибьютер')
+    order_distributer = CharField(max_length=50, verbose_name='Номер у дистрибьютера')
+    comment = CharField(max_length=250, verbose_name='Комментарий к товару')
+
+    class Meta:
+        verbose_name_plural = 'Товар'
+        verbose_name = 'Товары'
+        ordering = ('-id',)
+
+    def __int__(self) -> int:
+        return self.id
+
+
+class Users_shop(models.Model):
+    """Данные покупателя"""
 
     pass
-    # number
-    # id_manager
-    # data_orders
-    # price
-    # paid
-    # debt
-    # name_client
-    # phone
-    # update_date
-    # manager
+    #TODO модель данных покупателя 
+    id_user
+    name
+    phone
+    

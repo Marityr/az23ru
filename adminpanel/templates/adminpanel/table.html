@@ -13,6 +13,7 @@
         <th>Debt</th>
         <th>Name Client</th>
         <th>Phone</th>
+        <th>Updatet</th>
     </thead>
     <tbody>
         {% for order in table %}
@@ -25,6 +26,7 @@
             <td>{{ order.debt|floatformat:'0' }}</td>
             <th>{{ order.userName }}</th>
             <td>{{ order.mobile }}</td>
+            <td>{{ order.dateUpdated }}</td>
         </tr>
         {% endfor %}
     </tbody>
