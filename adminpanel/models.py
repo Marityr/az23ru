@@ -73,9 +73,14 @@ class Product(models.Model):
 class Users_shop(models.Model):
     """Данные покупателя"""
 
-    pass
-    #TODO модель данных покупателя 
-    id_user
-    name
-    phone
-    
+    id_user = CharField(max_length=10, verbose_name='ИД покупателя')
+    name = CharField(max_length=100, verbose_name='Ф.И.О')
+    mobile = CharField(max_length=20, verbose_name='Номер телефона')
+
+    class Meta:
+        verbose_name_plural = 'Покупатель'
+        verbose_name = 'Покупатели'
+        ordering = ('-id',)
+
+    def __int__(self) -> int:
+        return self.id

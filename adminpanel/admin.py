@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Dump_json, Orders, Product
+from .models import Dump_json, Orders, Product, Users_shop
 
 
 class Dump_jsonAdmin(admin.ModelAdmin):
@@ -28,6 +28,15 @@ class ProdustAdmin(admin.ModelAdmin):
     )
 
 
+class User_shopAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'id_user',
+        'name',
+        'mobile'
+    )
+
+admin.site.register(Users_shop, User_shopAdmin)
 admin.site.register(Orders, OrdersAdmin)
 admin.site.register(Product, ProdustAdmin)
 admin.site.register(Dump_json, Dump_jsonAdmin)

@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.decorators import login_required
 
-from services.dumpjson.dumpjson import Json_joob
-from services.listjson.listjson import list_json
+from services.jobjson.dumpjson import Json_joob
 
 
 class Account_page(View):
@@ -24,7 +23,7 @@ class Dump_json_page(View):
     @login_required
     def get(request, *args, **kwargs) -> render:
         template = 'adminpanel/dump_json.html'
-        Json_joob.save_db()
+        Json_joob.save_users_db()
         context = {
             'title': 'AZ23RU',
             'content': "Дамп сохранен",
@@ -41,6 +40,5 @@ class Table_page(View):
         template = 'adminpanel/table.html'
         context = {
             'title': 'AZ23RU',
-            'table': list_json(),
         }
         return render(request, template, context)
