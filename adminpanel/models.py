@@ -46,10 +46,11 @@ class Orders(models.Model):
         return self.id
 
 
-class Product(models.Model):
+class Product(models.Model): 
     """Позиции заказа"""
 
     number_order = CharField(max_length=10, verbose_name='Номер заказа')
+    number_product = CharField(max_length=10, verbose_name='Номер позиции', default='')
     status = CharField(max_length=50, verbose_name='Статус')
     descriptions = CharField(max_length=250, verbose_name='Описание')
     brand = CharField(max_length=50, verbose_name='Бранд')
