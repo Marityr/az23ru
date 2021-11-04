@@ -23,9 +23,14 @@ class ProdustAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'number_order',
+        'number_product',
         'status',
         'article',
     )
+    search_fields = (
+        'number_product',
+    )
+    #240030984
 
 
 class User_shopAdmin(admin.ModelAdmin):

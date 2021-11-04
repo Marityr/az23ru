@@ -138,3 +138,7 @@ LOGOUT_REDIRECT_URL = 'home_page'
 HOST_API = os.getenv('HOST_API')
 USER_API = os.getenv('USER_API')
 PASSWORD_API = os.getenv('PASSWORD_API')
+
+
+if DEBUG:
+    USE_TZ = False

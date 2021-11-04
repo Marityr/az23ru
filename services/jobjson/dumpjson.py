@@ -1,3 +1,5 @@
+from django import db
+
 from adminpanel.models import Orders, Product, Users_shop, Managers_shop
 from services.jobjson.getapijson import Wretline_json
 
@@ -13,6 +15,8 @@ class Json_joob:
         orders = Wretline_json.orders_json()
 
         for order in orders:
+            #TODO проверка джейсона на данные если есть то очистить бд и перезаписать если нету то нихрена не делать
+            #Product.objects.all().delete()
             orders_db = Orders()
 
             try:
@@ -24,19 +28,22 @@ class Json_joob:
             for product in order['positions']:
                 products_db = Product()
 
+                print(product['id'])
                 try:
                     instance = Product.objects.get(
+                        number_order=order['number'],
                         number_product=product['id']
                         )
                     instance.status = product['status']
                     instance.comment = product['comment']
                     instance.save()
-                except:
+                except Product.DoesNotExist:
                     Json_joob.save_model_product(
                         products_db,
                         order['number'],
                         order['date'],
                         product)
+            db.connections.close_all()
 
     def save_users_db() -> None:
         """Получаем и сохраняем список покупателей"""
@@ -59,6 +66,7 @@ class Json_joob:
                 user_db.name = user['name']
                 user_db.mobile = user['mobile']
                 user_db.save()
+            db.connections.close_all()
 
     def save_manager_db() -> None:
         """Получаем, сохраняем и проверяем на изменение список менеджеров"""
@@ -87,6 +95,7 @@ class Json_joob:
                 else:
                     manager_db.mobile = manager['mobile']
                 manager_db.save()
+            db.connections.close_all()
 
     def save_midel_order(orders_db, order) -> None:
         """Сохраняем данные заказов"""
@@ -149,7 +158,10 @@ class Json_joob:
                                         data_order, 
                                         product['deadline'])
         products_db.distributor = product['distributorName']
-        products_db.order_distributer = product['distributorOrderId']
+        if product['distributorOrderId'] == None:
+            products_db.order_distributer = ' '
+        else:
+            products_db.order_distributer = product['distributorOrderId']
         products_db.comment = product['comment']
         products_db.save()
 
