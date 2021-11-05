@@ -99,7 +99,7 @@ class Json_joob:
 
     def save_midel_order(orders_db, order) -> None:
         """Сохраняем данные заказов"""
-
+        #TODO формат разделителей данных в номере и сумме
         paid = order['sum'] - int(float(order['debt']))
 
         orders_db.number = order['number']
@@ -149,7 +149,7 @@ class Json_joob:
         products_db.number_order = number
         products_db.number_product = product['id']
         products_db.status = product['status']
-        products_db.description = product['description']
+        products_db.descriptions = product['description']
         products_db.brand = product['brand']
         products_db.article = product['numberFix']
         products_db.quantity = product['quantity']

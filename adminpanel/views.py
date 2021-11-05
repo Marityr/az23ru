@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 
 from services.jobjson.dumpjson import Json_joob
 
+from . services.views_page import table_all
+
 
 class Account_page(View):
     """Представление админ панели"""
@@ -40,7 +42,10 @@ class Table_page(View):
     @login_required
     def get(request, *args, **kwargs) -> render:
         template = 'adminpanel/table.html'
+        orders, prod = table_all()
         context = {
             'title': 'AZ23RU',
+            'orders': orders,
+            'products': prod,
         }
         return render(request, template, context)

@@ -1,0 +1,25 @@
+.bottom-menu {
+    padding: 15px;
+    position: fixed;
+    width: 100%;
+    border-top: 1px solid #000;
+    bottom: 0;
+    padding: 0;
+}
+
+.content_block {
+    height: calc(100vh - 57px);
+    font-size: 12px;
+}
+
+table {
+    height: 100%;
+    display: block;
+    position: relative;
+    overflow: auto;
+    width: 100%;
+}
+
+.col1 {
+    width: 120px;
+}
