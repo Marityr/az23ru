@@ -2,30 +2,29 @@
 {% load mathfilters %}
 
 {% block content %}
-<!-- <div class="table-responsive"> -->
 <table class="table table-sm table-bordered">
     <thead>
         <tr>
-            <td>№ Заказа</td>
-            <th>Менеджер</th>
-            <th class="col1">Дата заказа</th>
-            <th>Статус позиции</th>
-            <th>Описание детали</th>
-            <th>Бренд</th>
-            <th>Артикул</th>
-            <th>Количество</th>
-            <th>Цена продажи</th>
-            <th>Общая сумма</th>
-            <th>Оплачено</th>
-            <th>Долг</th>
-            <th>Имя клиента</th>
-            <th>Телефон клиента</th>
-            <th>Срок поставки</th>
-            <th>Поставщик</th>
-            <th>Номер заказа у поставщика</th>
-            <th>Комментарий</th>
-            <th>Время обновления</th>
-            <th>Менеджер по заказу</th>
+            <th><p class="col col1">№ Заказа</p></th>
+            <th><p class="col col2">Менеджер</p></th>
+            <th><p class="col col3">Дата заказа</p></th>
+            <th><p class="col col4">Статус позиции</p></th>
+            <th><p class="col col5">Описание детали</p></th>
+            <th><p class="col col6">Бренд</p></th>
+            <th><p class="col col7">Артикул</p></th>
+            <th><p class="col col8">Кол-во</p></th>
+            <th><p class="col col9">Цена продажи</p></th>
+            <th><p class="col col10">Общая сумма</p></th>
+            <th><p class="col col11">Оплачено</p></th>
+            <th><p class="col col12">Долг</p></th>
+            <th><p class="col col13">Имя клиента</p></th>
+            <th><p class="col col14">Телефон клиента</p></th>
+            <th><p class="col col15">Срок поставки</p></th>
+            <th><p class="col col16">Поставщик</p></th>
+            <th><p class="col col17">Номер заказа у поставщика</p></th>
+            <th><p class="col col18">Комментарий</p></th>
+            <th><p class="col col19">Время обновления</p></th>
+            <th><p class="col col20">Менеджер по заказу</p></th>
         </tr>
     </thead>
     <tbody>
@@ -33,12 +32,32 @@
         <tr>
             <td>{{ order.number }}</td>
             <td>{{ order.id_manager }}</td>
-            <td class="col1">{{ order.data_orders|date:'Y-m-d H:m' }}</td>
+            <td>{{ order.data_orders|date:'Y-m-d H:m' }}</td>
             {% for product in products %}
                 {% for item in product %}
                     {% if order.number == item.number_order %}
                         {% if forloop.first %}
+                            {% if item.status == 'Отгружен поставщиком'%}
+                            <td style="background: #fdf731;">{{ item.status }}</td>
+                            {% elif item.status == 'Заказан поставщику'%}
+                            <td style="background: #fdf731">{{ item.status }}</td>
+                            {% elif item.status == 'Требует внимания'%}
+                            <td style="background: #FF9C59">{{ item.status }}</td>
+                            {% elif item.status == 'Отказ поставщика'%}
+                            <td style="background: #E93F33">{{ item.status }}</td>
+                            {% elif item.status == 'Перезаказ поставщику'%}
+                            <td style="background: #C7C227">{{ item.status }}</td>
+                            {% elif item.status == 'Пришел на склад'%}
+                            <td style="background: #76f9fb">{{ item.status }}</td>
+                            {% elif item.status == 'Готов к выдаче'%}
+                            <td style="background: #e55ffe">{{ item.status }}</td>
+                            {% elif item.status == 'Выдан'%}
+                            <td style="background: #7ff21a">{{ item.status }}</td>
+                            {% elif item.status == 'Отказ клиента'%}
+                            <td style="background: #85241E">{{ item.status }}</td>
+                            {% else %}
                             <td>{{ item.status }}</td>
+                            {% endif %}
                             <td>{{ item.descriptions }}</td>
                             <td>{{ item.brand }}</td>
                             <td>{{ item.article }}</td>
@@ -50,12 +69,37 @@
                             <td>{{ order.name_client }}</td>
                             <td>{{ order.phone }}</td>
                             <td>{{ item.date_deadline|date:'Y-m-d H:m' }}</td>
+                            <td>{{ item.distributor }}</td>
+                            <td>{{ item.order_distributer }}</td>
+                            <td>{{ item.comment }}</td>
+                            <td>{{ order.update_date|date:'Y-m-d H:m' }}</td>
+                            <td>{{ order.manager }}</td>
                             </tr>
                         {% else %}
                         <td></td>
                         <td></td>
                         <td></td>
+                        {% if item.status == 'Отгружен поставщиком'%}
+                        <td style="background: #fdf731;">{{ item.status }}</td>
+                        {% elif item.status == 'Заказан поставщику'%}
+                        <td style="background: #fdf731">{{ item.status }}</td>
+                        {% elif item.status == 'Требует внимания'%}
+                        <td style="background: #FF9C59">{{ item.status }}</td>
+                        {% elif item.status == 'Отказ поставщика'%}
+                        <td style="background: #E93F33">{{ item.status }}</td>
+                        {% elif item.status == 'Перезаказ поставщику'%}
+                        <td style="background: #C7C227">{{ item.status }}</td>
+                        {% elif item.status == 'Пришел на склад'%}
+                        <td style="background: #76f9fb">{{ item.status }}</td>
+                        {% elif item.status == 'Готов к выдаче'%}
+                        <td style="background: #e55ffe">{{ item.status }}</td>
+                        {% elif item.status == 'Выдан'%}
+                        <td style="background: #7ff21a">{{ item.status }}</td>
+                        {% elif item.status == 'Отказ клиента'%}
+                        <td style="background: #85241E">{{ item.status }}</td>
+                        {% else %}
                         <td>{{ item.status }}</td>
+                        {% endif %}
                         <td>{{ item.descriptions }}</td>
                         <td>{{ item.brand }}</td>
                         <td>{{ item.article }}</td>
@@ -67,15 +111,32 @@
                         <td></td>
                         <td></td>
                         <td>{{ item.date_deadline|date:'Y-m-d H:m' }}</td>
+                        <td>{{ item.distributor }}</td>
+                        <td>{{ item.order_distributer }}</td>
+                        <td>{{ item.comment }}</td>
+                        <td></td>
+                        <td></td>
                         </tr>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
             {% endfor %}
         {% endfor %}
+        <tr>
+            <td colspan="20">
+                <button class="btn btn-table">
+                    ЗАГРУЗИТЬ ЕЩЕ ЗАКАЗЫ
+                </button>
+            </td>
+        </tr>
     </tbody>
 </table>
-<!-- </div> -->
+<style>
+
+#table-content {
+    padding: 0;
+}
+</style>
 {% endblock content %}
 <!--
     <table>
