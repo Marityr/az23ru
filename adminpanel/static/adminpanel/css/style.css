@@ -50,7 +50,7 @@ th {
 }
 
 .col3, .col4, .col15 {
-    width: 100px;
+    width: 120px;
 }
 
 .col5 {
@@ -65,10 +65,23 @@ th {
     width: 150px;
 }
 
-.btn-table {
-    position: sticky;
-    left: 20%;
-    width: calc(100vw - 30%);
-    background: #fff;
-    border: 2px solid #ccc;
+form.nav_form {
+    padding: 0!important;
+    position: relative;
+}
+form input[type='submit'] {
+    position: absolute;
+    top: 0px;
+    display: block;
+    right: 0;
+    padding: 10px 30px;
+    border: 2px solid #4c4f53;
+    visibility: hidden!important;
+}
+
+main {
+    position: fixed;
+    right: 0;
+    top: 48px;
+    bottom: 0;
 }

@@ -2,72 +2,35 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-6">
+<div class="row m-2">
+    <div class="col-lg-12">
+        <p></p>
         <div class="card">
+            <div class="card-header">
+                Руководство
+            </div>
             <div class="card-body">
-                Последнее обновление дампа БД от 2021.23.10 12-23-45
+                <h5 class="card-title">Импорт EXEL</h5>
+                <p class="card-text">Импорт в таблицу EXEL возможен в нескольких вариантах</p>
+                <button class="btn btn-primary">Полный импорт</button>
+                <button class="btn btn-secondary">Импорт по диапазону</button>
+                <button class="btn btn-success">Ипорт последних заказов</button>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Дата начало</label>
-                                <input type="data" class="form-control">
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Дата конец</label>
-                                <input type="data" class="form-control">
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Просмотреть</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Дата начало</label>
-                                <input type="data" class="form-control">
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Дата конец</label>
-                                <input type="data" class="form-control">
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Импорт</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card" style="width: 18rem;">
-            <img src="{% static 'adminpanel/img/exel.png' %}" class="card-img-top" alt="...">
+            <hr>
             <div class="card-body">
-                <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="button">Импорт</button>
-                </div>
+                <h5 class="card-title">Количество заказов в таблице</h5>
+                <p class="card-text">Выводиться только последние 50 заказов, для получения большего числа стоит изменить значение в настройках либо сделать выборку по диапазону.</p>
+                <p class="card-text">Для приемлемого времени ожидания формирования таблицы последних заказов в настройках советуем указывать диапазон заказов в районе 50-300 заказов. Стоит помнить что у каждого заказа может присутствовать более одной позиции товара.</p>
+                <button class="btn btn-primary">Последние заказы</button>
+                <button class="btn btn-primary">Выборка по диапазону</button>
+                <button class="btn btn-danger">Изменить настройки</button>
             </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card" style="width: 18rem;">
-            <img src="{% static 'adminpanel/img/json.png' %}" class="card-img-top" alt="...">
+            <hr>
             <div class="card-body">
-                <div class="d-grid gap-2">
-                    <button class="btn btn-primary" type="button">Импорт</button>
-                </div>
+                <h5 class="card-title">Дамп данных</h5>
+                <p class="card-text">Дамп данных в БД происходит кажду. 30-ю минуту часа в автоматическом режиме.</p>
+                <p class="card-text">Так же вы можете обновить данные в ручном режиме. Доводим до вашего сведения что данная опреация может занять некоторое время. Обычно от 2 до 5 минут. Будть терпеливы.</p>
+                <button class="btn btn-primary">Обновить Дамп</button>
             </div>
         </div>
     </div>

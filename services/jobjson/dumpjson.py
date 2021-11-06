@@ -15,12 +15,13 @@ class Json_joob:
         orders = Wretline_json.orders_json()
 
         for order in orders:
-            #TODO проверка джейсона на данные если есть то очистить бд и перезаписать если нету то нихрена не делать
-            #Product.objects.all().delete()
+            # TODO проверка джейсона на данные если есть то очистить бд и перезаписать если нету то нихрена не делать
+            # Product.objects.all().delete()
             orders_db = Orders()
 
             try:
-                instance = Orders.objects.get(number=order['number'])
+                instance = Orders.objects.get(
+                    number=Json_joob.dashinsert(str(order['number'])))
                 Json_joob.save_midel_order(instance, order)
             except Orders.DoesNotExist:
                 Json_joob.save_midel_order(orders_db, order)
@@ -31,16 +32,17 @@ class Json_joob:
                 print(product['id'])
                 try:
                     instance = Product.objects.get(
-                        number_order=order['number'],
+                        number_order=Json_joob.dashinsert(str(order['number'])),
                         number_product=product['id']
-                        )
+                    )
                     instance.status = product['status']
                     instance.comment = product['comment']
                     instance.save()
                 except Product.DoesNotExist:
+                    order_nubmer =Json_joob.dashinsert(str(order['number']))
                     Json_joob.save_model_product(
                         products_db,
-                        order['number'],
+                        order_nubmer,
                         order['date'],
                         product)
             db.connections.close_all()
@@ -78,7 +80,8 @@ class Json_joob:
             manager_db = Managers_shop()
 
             try:
-                instance = Managers_shop.objects.get(id_manager=manager['contractorId'])
+                instance = Managers_shop.objects.get(
+                    id_manager=manager['contractorId'])
                 if instance.name != flname:
                     instance.name = flname
                 if instance.mobile != manager['mobile']:
@@ -99,15 +102,15 @@ class Json_joob:
 
     def save_midel_order(orders_db, order) -> None:
         """Сохраняем данные заказов"""
-        #TODO формат разделителей данных в номере и сумме
+        # TODO формат разделителей данных в номере и сумме
         paid = order['sum'] - int(float(order['debt']))
 
-        orders_db.number = order['number']
+        orders_db.number = Json_joob.dashinsert(str(order['number']))
         orders_db.id_manager = order['managerId']
         orders_db.data_orders = order['date']
-        orders_db.price = order['sum']
-        orders_db.debt = int(float(order['debt']))
-        orders_db.paid = paid
+        orders_db.price = Json_joob.split_position(order['sum'])
+        orders_db.debt = Json_joob.split_position(int(float(order['debt'])))
+        orders_db.paid = Json_joob.split_position(paid)
         orders_db.name_client = order['userName']
         orders_db.phone = Json_joob.mobile_user(order['userId'])
         orders_db.update_date = order['dateUpdated']
@@ -155,8 +158,8 @@ class Json_joob:
         products_db.quantity = product['quantity']
         products_db.price_product = product['priceInSiteCurrency']
         products_db.date_deadline = Json_joob.time_add(
-                                        data_order, 
-                                        product['deadline'])
+            data_order,
+            product['deadline'])
         products_db.distributor = product['distributorName']
         if product['distributorOrderId'] == None:
             products_db.order_distributer = ' '
@@ -168,7 +171,20 @@ class Json_joob:
     def time_add(date_order, add_hour) -> str:
         """Дата поставки"""
 
-        date_object = datetime.datetime.strptime(date_order, '%Y-%m-%d %H:%M:%S')
+        date_object = datetime.datetime.strptime(
+            date_order, '%Y-%m-%d %H:%M:%S')
         duration_minutes = datetime.timedelta(hours=int(add_hour))
         result = date_object + duration_minutes
         return result
+
+    def split_position(price) -> int:
+        """Сплит цены по разрядам"""
+
+        z = '{0:,}'.format(int(float(price))).replace(',', ' ')
+        return z
+
+    def dashinsert(str) -> str:
+        """Сплит номера заказа"""
+
+        midPoint = len(str)//2
+        return str[:midPoint] + '-' + str[midPoint:]
