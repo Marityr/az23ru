@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from adminpanel.models import Orders, Product
 
 from services.jobjson.dumpjson import Json_joob
+from services.importxl.importxl import Importxl
 
 from . services.views_page import table_all
 from . forms import Search_orderForm, Datastartend_orderForm
@@ -128,7 +129,8 @@ class Date_oder_page(View):
 
         if request.method == 'POST':
             form = Datastartend_orderForm(request.POST)
-
+            prod = list()
+            
             if form.is_valid():
                 try:
                     instance = Orders.objects.filter(
@@ -137,7 +139,6 @@ class Date_oder_page(View):
                             form.cleaned_data['date_end']
                         )
                     )
-                    prod = list()
                     for item in instance:
                         prod.append(Product.objects.filter(
                             number_order=item.number
@@ -152,6 +153,21 @@ class Date_oder_page(View):
             'search_order': search_order,
             'form_date': form_date,
         }
+        return render(request, template, context)
+
+
+class ImportExel_page(View):
+    """Ипротр данных в ексель"""
+
+    @staticmethod
+    @login_required
+    def get(request, *args, **kwargs) -> render:
+        template = 'adminpanel/import.html'
+        Importxl.importxl()
+        context = {
+            'title': 'AZ23RU',
+        }
+
         return render(request, template, context)
 
 

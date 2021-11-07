@@ -7,6 +7,7 @@ from .views import (
     DynamicOrdersLoad,
     Search_order_page,
     Date_oder_page,
+    ImportExel_page,
 )
 
 
@@ -16,5 +17,6 @@ urlpatterns = [
     path('table/', Table_page.as_view(), name='table_page'),
     path('searchorder/', Search_order_page.as_view(), name='searchorder_page'),
     path('dateorder/', Date_oder_page.as_view(), name='dateorder_page'),
+    path('importxl/', ImportExel_page.as_view(), name='importxl_page'),
     path('load-more-orders/', DynamicOrdersLoad.as_view(), name='load_more_orders')
 ]

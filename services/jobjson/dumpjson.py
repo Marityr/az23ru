@@ -15,8 +15,6 @@ class Json_joob:
         orders = Wretline_json.orders_json()
 
         for order in orders:
-            # TODO проверка джейсона на данные если есть то очистить бд и перезаписать если нету то нихрена не делать
-            # Product.objects.all().delete()
             orders_db = Orders()
 
             try:
@@ -102,7 +100,7 @@ class Json_joob:
 
     def save_midel_order(orders_db, order) -> None:
         """Сохраняем данные заказов"""
-        # TODO формат разделителей данных в номере и сумме
+        
         paid = order['sum'] - int(float(order['debt']))
 
         orders_db.number = Json_joob.dashinsert(str(order['number']))
@@ -156,7 +154,7 @@ class Json_joob:
         products_db.brand = product['brand']
         products_db.article = product['numberFix']
         products_db.quantity = product['quantity']
-        products_db.price_product = product['priceInSiteCurrency']
+        products_db.price_product = Json_joob.split_position(int(float(product['priceInSiteCurrency'])))
         products_db.date_deadline = Json_joob.time_add(
             data_order,
             product['deadline'])
