@@ -13,7 +13,7 @@ from adminpanel.models import Orders, Product
 class Importxl:
     """Импорт данных в эксель"""
 
-    def importxl() -> None:
+    def importxl(orders) -> None:
         """Метод экспорта данных в эксель"""
 
         book = openpyxl.Workbook()
@@ -42,8 +42,6 @@ class Importxl:
             currentCell = sheet.cell(row=1, column=counter)
             currentCell.alignment = Alignment(horizontal='center')
             counter += 1
-
-        orders = Orders.objects.all()[:10]
 
         """записываем данные в таблицу"""
         counter = 2
@@ -96,5 +94,5 @@ class Importxl:
 
         sheet.row_dimensions[20]
 
-        book.save("myexel.xlsx")
+        book.save('/home/mojas/Документы/GitHub/az23ru/media/myexel.xlsx')
         book.close()

@@ -101,3 +101,18 @@ class Managers_shop(models.Model):
 
     def __int__(self) -> int:
         return self.id
+
+
+class Settings_user(models.Model):
+    """Настройки пользователя"""
+
+    max_table_orders = CharField(max_length=10, verbose_name='Количество отображаемых заказов по умолчанию')
+    name_file = CharField(max_length=100, verbose_name='Название файлов импорта')
+
+    class Meta:
+        verbose_name_plural = 'Настройки'
+        verbose_name = 'Настройки'
+        ordering = ('-id',)
+
+    def __int__(self) -> int:
+        return self.id

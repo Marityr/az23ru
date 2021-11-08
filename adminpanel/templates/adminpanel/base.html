@@ -6,14 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>AZ23RU</title>
-
-
-
     <!-- Bootstrap core CSS -->
     <link href="{% static 'adminpanel/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
 
     <style>
         .bd-placeholder-img {
@@ -123,28 +118,148 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Модальное окно -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                <div class="modal-body text-center">
+                    <div class="update">
+                        <h5 class="damp_db">Обновление</h5>
+                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                    </div>
+                    <div class="update_true animate_hiden">
+                        <h5 class="damp_db">Обновлено</h5>
+                        <i class="bi bi-check-circle"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
+    <!-- Модальное окно -->
+    <div class="modal fade" id="import_all" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="import">
+                        <h5 class="damp_db">Импорт EXEL</h5>
+                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                    </div>
+                    <div class="import_true animate_hiden">
+                        <h5 class="damp_db">Успешно!</h5>
+                        <i class="bi bi-check-circle"></i>
+                        <br>
+                        <br>
+                        <a href="/media/myexel.xlsx"><button class="btn btn-success">Скачать файл</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="import_date" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="import_forme">
+                        <h5 class="damp_db">Ипрорт по диапазону</h5>
+                        <form action="" id="myNameForm" method="post" class="form-control form-control-dark w-100">
+                            {% csrf_token %}
+                            {{ form_date2.date_start }}
+                            {{ form_date2.date_end }}
+                            <input type="submit" class="btn btn-success" id="dateforme" value="Ипрорт">
+                        </form>
+                    </div>
+                    <div class="import_date animate_hiden">
+                        <h5 class="damp_db">Импорт EXEL</h5>
+                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                            <span class="visually-hidden">Загрузка...</span>
+                        </div>
+                    </div>
+                    <div class="import_true_date animate_hiden">
+                        <h5 class="damp_db">Успешно!</h5>
+                        <i class="bi bi-check-circle"></i>
+                        <br>
+                        <br>
+                        <a href="/media/myexel.xlsx"><button class="btn btn-success">Скачать файл</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'adminpanel/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        $('#dumpjson_page').on('click', function () {
+            $('.update_true').removeClass('animate_hiden')
+            $('.update').removeClass('animate_hiden')
+            $('.update_true').addClass('animate_hiden')
+            $.ajax({
+                method: "GET",
+                dataType: "json",
+                url: "{% url 'dumpjson_page' %}",
+                success: function () {
+                    $('.update_true').removeClass('animate_hiden')
+                    $('.update').addClass('animate_hiden')
+                }
+            })
+            // function sayHi() {
+            //     $('.update_true').removeClass('animate_hiden')
+            //     $('.update').addClass('animate_hiden')
+            // }
+
+            // setTimeout(sayHi, 5000);
+
+        })
+        $('#import_all_button').on('click', function () {
+            $('.import_true').removeClass('animate_hiden')
+            $('.import').removeClass('animate_hiden')
+            $('.import_true').addClass('animate_hiden')
+            $.ajax({
+                method: "GET",
+                dataType: "json",
+                url: "{% url 'importxl_all' %}",
+                success: function () {
+                    $('.import_true').removeClass('animate_hiden')
+                    $('.import').addClass('animate_hiden')
+                    console.log('true')
+                }
+            })
+        })
+        $('#import_date_button').on('click', function () {
+
+            $('.import_forme').removeClass('animate_hiden')
+            $('.import_date').removeClass('animate_hiden')
+            $('.import_true_date').removeClass('animate_hiden')
+
+            $('.import_date').addClass('animate_hiden')
+            $('.import_true_date').addClass('animate_hiden')
+        })
+        $('#dateforme').click(function (event) {
+            $('.import_forme').addClass('animate_hiden')
+            $('.import_date').removeClass('animate_hiden')
+            event.preventDefault(); //so that we stop normal form submit.
+            $.ajax({
+                url: "{% url 'importxl_all' %}",
+                type: 'post',
+                dataType: 'json',
+                data: $('form#myNameForm').serialize(),
+                success: function (data) {
+                    $('.import_true_date').removeClass('animate_hiden')
+                    $('.import_date').addClass('animate_hiden')
+                    console.log('true')
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

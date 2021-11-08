@@ -16,7 +16,7 @@ class Wretline_json:
         USER_API = os.getenv('USER_API')
         PASSWORD_API = os.getenv('PASSWORD_API')
 
-        conect_url = f"https://{HOST_API}/cp/{table}?userlogin={USER_API}&userpsw={PASSWORD_API}"
+        conect_url = f"https://{HOST_API}/cp/{table}?userlogin={USER_API}&userpsw={PASSWORD_API}&desc=true"
 
         return conect_url
 

@@ -13,7 +13,8 @@ class Json_joob:
         """Получаем, сохраняем и проверяем данные по заказу"""
         # TODO уменьшить количество обращений к БД
         orders = Wretline_json.orders_json()
-
+        # Orders.objects.all().delete()
+        # Product.objects.all().delete()
         for order in orders:
             orders_db = Orders()
 

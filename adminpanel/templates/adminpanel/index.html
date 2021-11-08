@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block content %}
+<style>
+    main {
+        overflow-x: auto;
+    }
+</style>
 <div class="row m-2">
     <div class="col-lg-12">
         <p></p>
@@ -12,25 +17,24 @@
             <div class="card-body">
                 <h5 class="card-title">Импорт EXEL</h5>
                 <p class="card-text">Импорт в таблицу EXEL возможен в нескольких вариантах</p>
-                <button class="btn btn-primary">Полный импорт</button>
-                <button class="btn btn-secondary">Импорт по диапазону</button>
-                <button class="btn btn-success">Ипорт последних заказов</button>
+                <button id="import_all_button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import_all">Полный импорт</button>
+                <button id="import_date_button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import_date">Импорт по диапазону</button>
             </div>
             <hr>
             <div class="card-body">
                 <h5 class="card-title">Количество заказов в таблице</h5>
-                <p class="card-text">Выводиться только последние 50 заказов, для получения большего числа стоит изменить значение в настройках либо сделать выборку по диапазону.</p>
-                <p class="card-text">Для приемлемого времени ожидания формирования таблицы последних заказов в настройках советуем указывать диапазон заказов в районе 50-300 заказов. Стоит помнить что у каждого заказа может присутствовать более одной позиции товара.</p>
-                <button class="btn btn-primary">Последние заказы</button>
-                <button class="btn btn-primary">Выборка по диапазону</button>
-                <button class="btn btn-danger">Изменить настройки</button>
+                <p class="card-text">Выводиться только последние 200 заказов. <br> Для получения большего числа стоит изменить значение в настройках либо сделать выборку по диапазону через форму вверху. После выбора даты нажмите ENTER</p>
+                <a href="{% url 'table_page' %}"><button class="btn btn-primary">Последние заказы</button></a>
+                <p class="card-text"><br> Для приемлемого времени ожидания формирования таблицы последних заказов в
+                    настройках советуем указывать диапазон заказов в районе 50-300 заказов. Стоит помнить что у каждого
+                    заказа может присутствовать более одной позиции товара. Изменение настроек отображения советуем делать через администратора во избежание неполадок.</p>
             </div>
             <hr>
             <div class="card-body">
                 <h5 class="card-title">Дамп данных</h5>
-                <p class="card-text">Дамп данных в БД происходит кажду. 30-ю минуту часа в автоматическом режиме.</p>
-                <p class="card-text">Так же вы можете обновить данные в ручном режиме. Доводим до вашего сведения что данная опреация может занять некоторое время. Обычно от 2 до 5 минут. Будть терпеливы.</p>
-                <button class="btn btn-primary">Обновить Дамп</button>
+                <p class="card-text">Дамп данных в БД происходит кажду. 30-ю минуту часа в автоматическом режиме. <br> Так же вы можете обновить данные в ручном режиме. Доводим до вашего сведения что
+                    данная опреация может занять некоторое время. Обычно от 2 до 5 минут, будть терпеливы.</p>
+                <button id="dumpjson_page" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Обновить Дамп</button>
             </div>
         </div>
     </div>

@@ -10,6 +10,8 @@ from services.importxl.importxl import Importxl
 from . services.views_page import table_all
 from . forms import Search_orderForm, Datastartend_orderForm
 
+from datetime import datetime
+
 
 class Account_page(View):
     """Представление админ панели"""
@@ -20,10 +22,12 @@ class Account_page(View):
         template = 'adminpanel/index.html'
         form_order_search = Search_orderForm()
         form_date = Datastartend_orderForm()
+        form_date2 = Datastartend_orderForm()
         context = {
             'title': 'AZ23RU',
             'search_order': form_order_search,
             'form_date': form_date,
+            'form_date2': form_date2,
         }
         return render(request, template, context)
 
@@ -33,8 +37,7 @@ class Dump_json_page(View):
 
     @staticmethod
     @login_required
-    def get(request, *args, **kwargs) -> render:
-        template = 'adminpanel/dump_json.html'
+    def get(request, *args, **kwargs) -> JsonResponse:
         Json_joob.save_users_db()
         Json_joob.save_manager_db()
         Json_joob.save_orders_db()
@@ -42,7 +45,7 @@ class Dump_json_page(View):
             'title': 'AZ23RU',
             'content': "Дамп сохранен",
         }
-        return render(request, template, context)
+        return JsonResponse({'data': context})
 
 
 class Table_page(View):
@@ -130,9 +133,10 @@ class Date_oder_page(View):
         if request.method == 'POST':
             form = Datastartend_orderForm(request.POST)
             prod = list()
-            
+
             if form.is_valid():
                 try:
+                    print(form.cleaned_data['date_start'], form.cleaned_data['date_end'])
                     instance = Orders.objects.filter(
                         data_orders__range=(
                             form.cleaned_data['date_start'],
@@ -163,12 +167,51 @@ class ImportExel_page(View):
     @login_required
     def get(request, *args, **kwargs) -> render:
         template = 'adminpanel/import.html'
-        Importxl.importxl()
+        Importxl.importxl(Orders.objects.all()[:10])
         context = {
             'title': 'AZ23RU',
         }
 
         return render(request, template, context)
+
+
+class ImportExelAll_page(View):
+    """Ипротр данных в ексель"""
+
+    @staticmethod
+    @login_required
+    def get(request, *args, **kwargs) -> JsonResponse:
+        template = 'adminpanel/import.html'
+        print('start import')
+        Importxl.importxl(Orders.objects.all())
+        print('end import')
+        context = {
+            'title': 'AZ23RU',
+        }
+
+        return JsonResponse({'data': context})
+
+    @staticmethod
+    @login_required
+    def post(request, *args, **kwargs) -> JsonResponse:
+        if request.method == 'POST':
+            tmp = request.POST
+            datastart = datetime.strptime(tmp['date_start'], "%Y-%m-%d")
+            dataend = datetime.strptime(tmp['date_end'], "%Y-%m-%d")
+            instance = Orders.objects.filter(
+                data_orders__range=(
+                    datastart,
+                    dataend
+                )
+            )
+            print('start import')
+            Importxl.importxl(instance)
+            print('end import')
+
+        context = {
+            'title': 'AZ23RU',
+        }
+        return JsonResponse({'data': context})
 
 
 class DynamicOrdersLoad(View):
