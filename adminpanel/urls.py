@@ -4,11 +4,11 @@ from .views import (
     Account_page,
     Dump_json_page,
     Table_page,
-    DynamicOrdersLoad,
     Search_order_page,
     Date_oder_page,
     ImportExel_page,
     ImportExelAll_page,
+    SMTP_mail,
 )
 
 
@@ -20,5 +20,5 @@ urlpatterns = [
     path('dateorder/', Date_oder_page.as_view(), name='dateorder_page'),
     path('importxl/', ImportExel_page.as_view(), name='importxl_page'),
     path('importxl_all/', ImportExelAll_page.as_view(), name='importxl_all'),
-    path('load-more-orders/', DynamicOrdersLoad.as_view(), name='load_more_orders')
+    path('smtpmail/', SMTP_mail.as_view(), name='smtp_mail'),
 ]

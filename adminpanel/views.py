@@ -6,6 +6,7 @@ from adminpanel.models import Orders, Product
 
 from services.jobjson.dumpjson import Json_joob
 from services.importxl.importxl import Importxl
+from services.smtp.mailsmtp import mail_smtp
 
 from . services.views_page import table_all
 from . forms import Search_orderForm, Datastartend_orderForm
@@ -36,7 +37,6 @@ class Dump_json_page(View):
     """Запись Json в БД"""
 
     @staticmethod
-    @login_required
     def get(request, *args, **kwargs) -> JsonResponse:
         Json_joob.save_users_db()
         Json_joob.save_manager_db()
@@ -136,7 +136,8 @@ class Date_oder_page(View):
 
             if form.is_valid():
                 try:
-                    print(form.cleaned_data['date_start'], form.cleaned_data['date_end'])
+                    print(form.cleaned_data['date_start'],
+                          form.cleaned_data['date_end'])
                     instance = Orders.objects.filter(
                         data_orders__range=(
                             form.cleaned_data['date_start'],
@@ -214,29 +215,16 @@ class ImportExelAll_page(View):
         return JsonResponse({'data': context})
 
 
-class DynamicOrdersLoad(View):
-    """Динамическая подгрузка заказов"""
+class SMTP_mail(View):
+    """Отправка отчета файлом на email"""
 
     @staticmethod
-    def get(request, *args, **kwargs) -> JsonResponse:
-        pass
-        # last_order_id = request.GET.get('lastOrderId')
-        # more_orders = Orders.objects.filter(pk__lt=int(last_order_id))[:2]
-
-        # if not more_orders:
-        #     return JsonResponse({'data': False})
-
-        # data = []
-
-        # for order in more_orders:
-        #     obj = {
-        #         'id': order.id,
-        #         'number': order.number,
-        #         'id_manager': order.id_manager,
-        #         'data_orders': order.data_orders,
-        #     }
-        #     data.append(obj)
-
-        # data[-1]['last_order'] = True
-
-        # return JsonResponse({'data': data})
+    def get(request, *args, **kwargs) -> HttpResponse:
+        today = datetime.now().date()
+        datastart = datetime.strptime(str(today), "%Y-%m-%d")
+        dataend = datetime.strptime('2021-09-01', "%Y-%m-%d")
+        instance = Orders.objects.all()[:2000]
+        print(instance)
+        #Importxl.importxl(instance)
+        #mail_smtp()
+        return HttpResponse('smtp mail')
