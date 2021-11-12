@@ -24,7 +24,7 @@ class Account_page(View):
         form_order_search = Search_orderForm()
         form_date2 = Datastartend_orderForm()
         context = {
-            'title': 'AZ23RU',
+            'title': 'AMAXI',
             'search_order': form_order_search,
             'form_date2': form_date2,
         }
@@ -40,7 +40,7 @@ class Dump_json_page(View):
         Json_joob.save_manager_db()
         Json_joob.save_orders_db()
         context = {
-            'title': 'AZ23RU',
+            'title': 'AMAXI',
             'content': "Дамп сохранен",
         }
         return JsonResponse({'data': context})
@@ -57,7 +57,7 @@ class Table_page(View):
         form_date = Datastartend_orderForm()
         orders, prod = table_all()
         context = {
-            'title': 'AZ23RU',
+            'title': 'AMAXI',
             'orders': orders,
             'products': prod,
             'search_order': form_order_search,
@@ -76,7 +76,7 @@ class Search_order_page(View):
         template = 'adminpanel/number_order.html'
         form_order_search = Search_orderForm()
         context = {
-            'title': 'AZ23RU',
+            'title': 'AMAXI',
             'search_order': form_order_search,
         }
         return render(request, template, context)
@@ -100,7 +100,7 @@ class Search_order_page(View):
                 except Orders.DoesNotExist:
                     pass
         context = {
-            'title': 'AZ23RU',
+            'title': 'AMAXI',
             'order': instance,
             'products': prod,
             'search_order': form_order_search,
@@ -117,7 +117,7 @@ class Date_oder_page(View):
         template = 'adminpanel/number_order.html'
         form_order_search = Search_orderForm()
         context = {
-            'title': 'AZ23RU',
+            'title': 'AMAXI',
             'search_order': form_order_search,
         }
         return render(request, template, context)
@@ -149,7 +149,7 @@ class Date_oder_page(View):
                 except:
                     pass
         context = {
-            'title': 'AZ23RU',
+            'title': 'AMAXI',
             'orders': instance,
             'products': prod,
             'search_order': search_order,
@@ -165,9 +165,9 @@ class ImportExel_page(View):
     @login_required
     def get(request, *args, **kwargs) -> render:
         template = 'adminpanel/import.html'
-        Importxl.importxl(Orders.objects.all()[:10])
+        Importxl.importxl(Orders.objects.all())
         context = {
-            'title': 'AZ23RU',
+            'title': 'AMAXI',
         }
 
         return render(request, template, context)
@@ -184,7 +184,7 @@ class ImportExelAll_page(View):
         Importxl.importxl(Orders.objects.all())
         print('end import')
         context = {
-            'title': 'AZ23RU',
+            'title': 'AMAXI',
         }
 
         return JsonResponse({'data': context})
@@ -207,7 +207,7 @@ class ImportExelAll_page(View):
             print('end import')
 
         context = {
-            'title': 'AZ23RU',
+            'title': 'AMAXI',
         }
         return JsonResponse({'data': context})
 
