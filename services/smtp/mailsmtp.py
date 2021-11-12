@@ -6,13 +6,16 @@ from email.mime.base import MIMEBase
 import smtplib
 import os
 
+from datetime import datetime
 from dotenv import load_dotenv
 
 
 load_dotenv()
 
 def mail_smtp():
-    PASWORDSMTP = 'gvugmgivnuqytvmq'
+
+    today = datetime.now().date()
+    PASWORDSMTP = os.getenv('PASWORDSMTP')
     LOGINSMTP = os.getenv('LOGINSMTP')
     REPICIENTSMTP = os.getenv('REPICIENTSMTP')
     # create message object instance
@@ -21,16 +24,16 @@ def mail_smtp():
     message = "Файл прикреплен в вложении"
 
     # setup the parameters of the message
-    password = f"{PASWORDSMTP}"
-    msg['From'] = f"{LOGINSMTP}"
-    msg['To'] = f"{REPICIENTSMTP}"
-    msg['Subject'] = "Список заказов из АБЦП с 21-09-01 до 21-11-10"
+    password = "gvugmgivnuqytvmq"
+    msg['From'] = "log.az23ru@gmail.com"
+    msg['To'] = "uved.az23ru@gmail.com"
+    msg['Subject'] = f"Список заказов из АБЦП с 2021.05.12 до {str(today)[:10]}"
 
     # add in the message body
     msg.attach(MIMEText(message, 'html'))
 
     files = [
-        'myexel.xlsx',
+        '/home/sammy/myprojectdir/media/myexel.xlsx',
     ]
 
     for a_file in files:
@@ -44,7 +47,7 @@ def mail_smtp():
     encoders.encode_base64(part)
     msg.attach(part)
     # create server
-    server = smtplib.SMTP('smtp.gmail.com: 587')
+    server = smtplib.SMTP('smtp.gmail.com:587')
 
     server.starttls()
 

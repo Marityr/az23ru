@@ -15,19 +15,20 @@
                 Руководство
             </div>
             <div class="card-body">
-                <h5 class="card-title">Импорт EXEL</h5>
-                <p class="card-text">Импорт в таблицу EXEL возможен в нескольких вариантах</p>
-                <button id="import_all_button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import_all">Полный импорт</button>
-                <button id="import_date_button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import_date">Импорт по диапазону</button>
-            </div>
-            <hr>
-            <div class="card-body">
-                <h5 class="card-title">Количество заказов в таблице</h5>
+                <h5 class="card-title">Выгрузка последних заказов</h5>
                 <p class="card-text">Выводиться только последние 200 заказов. <br> Для получения большего числа стоит изменить значение в настройках либо сделать выборку по диапазону через форму вверху. После выбора даты нажмите ENTER</p>
                 <a href="{% url 'table_page' %}"><button class="btn btn-primary">Последние заказы</button></a>
                 <p class="card-text"><br> Для приемлемого времени ожидания формирования таблицы последних заказов в
                     настройках советуем указывать диапазон заказов в районе 50-300 заказов. Стоит помнить что у каждого
                     заказа может присутствовать более одной позиции товара. Изменение настроек отображения советуем делать через администратора во избежание неполадок.</p>
+            </div>
+            <hr>
+            <div class="card-body">
+                <h5 class="card-title">Импорт EXCEL</h5>
+                <p class="card-text">Импорт в таблицу EXCEL возможен в нескольких вариантах</p>
+                <button id="import_all_button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import_all">Полный импорт</button>
+                <button id="import_date_button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import_date">Импорт по диапазону</button>
+                <button id="import_date_button" class="btn btn-success" >Импорт последних заказов</button>
             </div>
             <hr>
             <div class="card-body">

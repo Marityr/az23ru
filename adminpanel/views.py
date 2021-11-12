@@ -1,17 +1,17 @@
-from django.shortcuts import redirect, render, HttpResponse
-from django.views import View
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from adminpanel.models import Orders, Product
+from django.shortcuts import HttpResponse, redirect, render
+from django.views import View
 
-from services.jobjson.dumpjson import Json_joob
+from adminpanel.models import Orders, Product
 from services.importxl.importxl import Importxl
+from services.jobjson.dumpjson import Json_joob
 from services.smtp.mailsmtp import mail_smtp
 
-from . services.views_page import table_all
-from . forms import Search_orderForm, Datastartend_orderForm
-
-from datetime import datetime
+from .forms import Datastartend_orderForm, Search_orderForm
+from .services.views_page import table_all
 
 
 class Account_page(View):
@@ -22,12 +22,10 @@ class Account_page(View):
     def get(request, *args, **kwargs) -> render:
         template = 'adminpanel/index.html'
         form_order_search = Search_orderForm()
-        form_date = Datastartend_orderForm()
         form_date2 = Datastartend_orderForm()
         context = {
             'title': 'AZ23RU',
             'search_order': form_order_search,
-            'form_date': form_date,
             'form_date2': form_date2,
         }
         return render(request, template, context)
@@ -136,8 +134,7 @@ class Date_oder_page(View):
 
             if form.is_valid():
                 try:
-                    print(form.cleaned_data['date_start'],
-                          form.cleaned_data['date_end'])
+                    print(form.cleaned_data['date_start'], form.cleaned_data['date_end'])
                     instance = Orders.objects.filter(
                         data_orders__range=(
                             form.cleaned_data['date_start'],
@@ -220,11 +217,7 @@ class SMTP_mail(View):
 
     @staticmethod
     def get(request, *args, **kwargs) -> HttpResponse:
-        today = datetime.now().date()
-        datastart = datetime.strptime(str(today), "%Y-%m-%d")
-        dataend = datetime.strptime('2021-09-01', "%Y-%m-%d")
-        instance = Orders.objects.all()[:2000]
-        print(instance)
-        #Importxl.importxl(instance)
-        #mail_smtp()
+
+        Importxl.importxl(Orders.objects.all()[:2000])
+        mail_smtp()
         return HttpResponse('smtp mail')

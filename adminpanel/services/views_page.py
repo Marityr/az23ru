@@ -4,7 +4,7 @@ from adminpanel.models import Orders, Product
 def table_all() -> list:
     """Список заказов и товаров для таблицы отображения"""
 
-    orders = Orders.objects.all()[:200]
+    orders = Orders.objects.all()[:50]
     prod = list()
 
     for item in orders:

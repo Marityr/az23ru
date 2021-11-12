@@ -40,7 +40,7 @@ class Orders(models.Model):
     class Meta:
         verbose_name_plural = 'Заказ'
         verbose_name = 'Заказы'
-        ordering = ('-id',)
+        ordering = ('id',)
 
     def __int__(self) -> int:
         return self.id
@@ -65,7 +65,7 @@ class Product(models.Model):
     class Meta:
         verbose_name_plural = 'Товар'
         verbose_name = 'Товары'
-        ordering = ('-id',)
+        ordering = ('id',)
 
     def __int__(self) -> int:
         return self.id

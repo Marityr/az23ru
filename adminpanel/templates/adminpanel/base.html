@@ -35,7 +35,7 @@
 <body>
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="{% url 'login_page' %}">AZ23RU</a>
+        <a class="navbar-brand col-md-1 col-lg-1 me-0 px-3" href="{% url 'loginpage' %}">Amaxi</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -46,56 +46,34 @@
             {{ search_order.number_oder }}
             <input type="submit" value="Enter">
         </form>
-        <form action="{% url 'dateorder_page' %}" method="post" class="form-control form-control-dark w-100 nav_form">
-            {% csrf_token %}
-            {{ form_date.date_start }}
-            {{ form_date.date_end }}
-            <input type="submit" value="Enter">
-        </form>
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="{% url 'logout' %}">Выход</a>
+                <a class="nav-link px-3" href="{% url 'admin:logout' %}">Выход</a>
             </div>
         </div>
     </header>
 
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <nav id="sidebarMenu" class="col-md-1 col-lg-1 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{% url 'account_page' %}">
                                 <span data-feather="home"></span>
-                                Панель
+                                Панель управления
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'table_page' %}">
                                 <span data-feather="users"></span>
-                                Таблица
+                                Таблица заказов
                             </a>
-                    </ul>
-
-                    <h6
-                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Eamil</span>
-                        <a class="link-secondary" href="#" aria-label="Add a new report">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'smtp_mail' %}">
-                                <span data-feather="file-text"></span>
-                                Получить отчет
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </nav>
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
+            <main class="col-md-11 ms-sm-auto col-lg-11 p-0">
                 <div class="justify-content-between flex-wrap flex-md-nowrap align-items-center border-bottom">
                     {% block content %}
 
@@ -131,7 +109,7 @@
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <div class="import">
-                        <h5 class="damp_db">Импорт EXEL</h5>
+                        <h5 class="damp_db">Импорт EXCEL</h5>
                         <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
                             <span class="visually-hidden">Загрузка...</span>
                         </div>
@@ -154,16 +132,16 @@
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <div class="import_forme">
-                        <h5 class="damp_db">Ипрорт по диапазону</h5>
+                        <h5 class="damp_db">Импорт по диапазону</h5>
                         <form action="" id="myNameForm" method="post" class="form-control form-control-dark w-100">
                             {% csrf_token %}
                             {{ form_date2.date_start }}
                             {{ form_date2.date_end }}
-                            <input type="submit" class="btn btn-success" id="dateforme" value="Ипрорт">
+                            <input type="submit" class="btn btn-success" id="dateforme" value="Импорт">
                         </form>
                     </div>
                     <div class="import_date animate_hiden">
-                        <h5 class="damp_db">Импорт EXEL</h5>
+                        <h5 class="damp_db">Импорт EXCEL</h5>
                         <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
                             <span class="visually-hidden">Загрузка...</span>
                         </div>

@@ -40,7 +40,7 @@
         <tr>
             <td>{{ order.number }}</td>
             <td>{{ order.id_manager }}</td>
-            <td>{{ order.data_orders|date:'Y-m-d H:m' }}</td>
+            <td>{{ order.data_orders|date:'d-m-y' }}</td>
             {% for product in products %}
                 {% for item in product %}
                     {% if order.number == item.number_order %}
@@ -76,11 +76,11 @@
                             <td>{{ order.debt }}</td>
                             <td>{{ order.name_client }}</td>
                             <td>{{ order.phone }}</td>
-                            <td>{{ item.date_deadline|date:'Y-m-d H:m' }}</td>
+                            <td>{{ item.date_deadline|date:'d-m-y' }}</td>
                             <td>{{ item.distributor }}</td>
                             <td>{{ item.order_distributer }}</td>
                             <td>{{ item.comment }}</td>
-                            <td>{{ order.update_date|date:'Y-m-d H:m' }}</td>
+                            <td>{{ order.update_date|date:'d-m-y' }}</td>
                             <td>{{ order.manager }}</td>
                             </tr>
                         {% else %}

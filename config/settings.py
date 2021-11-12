@@ -140,5 +140,10 @@ USER_API = os.getenv('USER_API')
 PASSWORD_API = os.getenv('PASSWORD_API')
 
 
+LOGIN_REDIRECT_URL = 'account_page'
+LOGOUT_REDIRECT_URL = 'loginpage'
+LOGIN_URL = 'loginpage'
+
+
 if DEBUG:
     USE_TZ = False

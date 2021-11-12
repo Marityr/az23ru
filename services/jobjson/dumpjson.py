@@ -13,14 +13,16 @@ class Json_joob:
         """Получаем, сохраняем и проверяем данные по заказу"""
         # TODO уменьшить количество обращений к БД
         orders = Wretline_json.orders_json()
-        # Orders.objects.all().delete()
-        # Product.objects.all().delete()
+
+        #Orders.objects.all().delete()
+        #Product.objects.all().delete()
+        
         for order in orders:
             orders_db = Orders()
 
             try:
                 instance = Orders.objects.get(
-                    number=Json_joob.dashinsert(str(order['number'])))
+                    number=order['number'])
                 Json_joob.save_midel_order(instance, order)
             except Orders.DoesNotExist:
                 Json_joob.save_midel_order(orders_db, order)
@@ -31,14 +33,14 @@ class Json_joob:
                 print(product['id'])
                 try:
                     instance = Product.objects.get(
-                        number_order=Json_joob.dashinsert(str(order['number'])),
+                        number_order=order['number'],
                         number_product=product['id']
                     )
                     instance.status = product['status']
                     instance.comment = product['comment']
                     instance.save()
                 except Product.DoesNotExist:
-                    order_nubmer =Json_joob.dashinsert(str(order['number']))
+                    order_nubmer =order['number']
                     Json_joob.save_model_product(
                         products_db,
                         order_nubmer,
@@ -104,8 +106,8 @@ class Json_joob:
         
         paid = order['sum'] - int(float(order['debt']))
 
-        orders_db.number = Json_joob.dashinsert(str(order['number']))
-        orders_db.id_manager = order['managerId']
+        orders_db.number = order['number']
+        orders_db.id_manager = Json_joob.managernumber(Json_joob.manager_name(order['userId']))
         orders_db.data_orders = order['date']
         orders_db.price = Json_joob.split_position(order['sum'])
         orders_db.debt = Json_joob.split_position(int(float(order['debt'])))
@@ -187,3 +189,22 @@ class Json_joob:
 
         midPoint = len(str)//2
         return str[:midPoint] + '-' + str[midPoint:]
+
+    def managernumber(manager) -> str:
+        number_id = 0
+        if manager == 'Валентин Панаетидис':
+            number_id = 1
+        if manager == 'Василий Панаетидис':
+            number_id = 2
+        if manager == 'Максим Паненко':
+            number_id = 3
+        if manager == 'Роман Оробейко':
+            number_id = 4
+        if manager == 'Дмитрий Маслов':
+            number_id = 5
+        if manager == 'Сергей Параскевопуло':
+            number_id = 6
+        if manager == 'Станислав Ефремов':
+            number_id = 7
+        
+        return number_id
