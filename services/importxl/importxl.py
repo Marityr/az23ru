@@ -110,8 +110,8 @@ class Importxl:
         sheet.row_dimensions[20]
 
         #пути сохранения сервр-локалка не трогать
-        book.save('/home/sammy/myprojectdir/media/myexel.xlsx')
-        #book.save('media/myexel.xlsx')
+        #book.save('/home/sammy/myprojectdir/media/myexel.xlsx')
+        book.save('media/myexel.xlsx')
         book.close()
 
     def color_column(sheet, rows, columns, status) -> None:

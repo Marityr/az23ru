@@ -23,14 +23,16 @@ class Json_joob:
             try:
                 instance = Orders.objects.get(
                     number=order['number'])
-                Json_joob.save_midel_order(instance, order)
+                print('1')
+                #Json_joob.save_midel_order(instance, order)
             except Orders.DoesNotExist:
-                Json_joob.save_midel_order(orders_db, order)
+                print('2')
+                #Json_joob.save_midel_order(orders_db, order)
 
             for product in order['positions']:
                 products_db = Product()
 
-                print(product['id'])
+                #print(product['id'])
                 try:
                     instance = Product.objects.get(
                         number_order=order['number'],

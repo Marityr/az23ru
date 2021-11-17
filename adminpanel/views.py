@@ -221,16 +221,3 @@ class SMTP_mail(View):
         Importxl.importxl(Orders.objects.all()[:2000])
         mail_smtp()
         return HttpResponse('smtp mail')
-
-
-class Readexlsx(View):
-    """Считывание данных из экселя и их запись в БД"""
-
-    def get(request, *args, **kwargs) -> render:
-        template = 'adminpanel/readxlsx.html'
-
-        context = {
-            'title': 'title test',
-        }
-
-        return render(request, template, context)

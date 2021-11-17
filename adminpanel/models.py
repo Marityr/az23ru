@@ -40,7 +40,7 @@ class Orders(models.Model):
     class Meta:
         verbose_name_plural = 'Заказ'
         verbose_name = 'Заказы'
-        ordering = ('id',)
+        ordering = ('-id',)
 
     def __int__(self) -> int:
         return self.id
@@ -116,3 +116,13 @@ class Settings_user(models.Model):
 
     def __int__(self) -> int:
         return self.id
+
+
+class Number_catalog(models.Model):
+    """Модель Экспорта заказов"""
+    #TODO добавить поле модели для обозначения уникальности
+    number_cat = CharField(max_length=20, verbose_name='Каталожный номер')
+    brand = CharField(max_length=150, verbose_name='Бранд')
+    descriptions = TextField(verbose_name='Описание')
+    cuantity = CharField(max_length=10, verbose_name='Количество')
+    price = CharField(max_length=150, verbose_name='Цена')
