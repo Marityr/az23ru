@@ -46,6 +46,11 @@
             {{ search_order.number_oder }}
             <input type="submit" value="Enter">
         </form>
+        <form action="{% url 'searchorder_page' %}" method="post" class="form-control form-control-dark w-100 nav_form">
+            {% csrf_token %}
+            {{ search_order.number_oder }}
+            <input type="submit" value="Enter">
+        </form>
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
                 <a class="nav-link px-3" href="{% url 'admin:logout' %}">Выход</a>
