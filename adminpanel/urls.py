@@ -9,6 +9,7 @@ from .views import (
     ImportExel_page,
     ImportExelAll_page,
     SMTP_mail,
+    Exportdata_page,
 )
 
 
@@ -21,4 +22,5 @@ urlpatterns = [
     path('importxl/', ImportExel_page.as_view(), name='importxl_page'),
     path('importxl_all/', ImportExelAll_page.as_view(), name='importxl_all'),
     path('smtpmail/', SMTP_mail.as_view(), name='smtp_mail'),
+    path('exportdata/', Exportdata_page.as_view(), name='exportdata_page')
 ]

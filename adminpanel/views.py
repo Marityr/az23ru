@@ -9,6 +9,7 @@ from adminpanel.models import Orders, Product
 from services.importxl.importxl import Importxl
 from services.jobjson.dumpjson import Json_joob
 from services.smtp.mailsmtp import mail_smtp
+from services.exportxlsx.exportxlsx import Export_file
 
 from .forms import Datastartend_orderForm, Search_orderForm
 from .services.views_page import table_all
@@ -221,3 +222,15 @@ class SMTP_mail(View):
         Importxl.importxl(Orders.objects.all()[:2000])
         mail_smtp()
         return HttpResponse('smtp mail')
+
+
+class Exportdata_page(View):
+    """Инициация считывания данных"""
+
+    @staticmethod
+    @login_required
+    def get(request, *args, **kwargs) -> HttpResponse:
+
+        Export_file.read_data()
+
+        return HttpResponse('read data')

@@ -31,7 +31,7 @@ class Importxl:
         for object in width_column:
             sheet.column_dimensions[object['column']].width = object['width']
 
-        """Задаем стили титульной строку"""
+        """Задаем стили титульной строки"""
         for counter, item in enumerate(title, 1):
             sheet.cell(row=1, column=counter).value = item
             sheet.cell(row=1, column=counter).font = fontStyletitle
