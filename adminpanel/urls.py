@@ -10,6 +10,8 @@ from .views import (
     ImportExelAll_page,
     SMTP_mail,
     Exportdata_page,
+    Searchcatalog_page,
+    NoneSearch_page,
 )
 
 
@@ -22,5 +24,7 @@ urlpatterns = [
     path('importxl/', ImportExel_page.as_view(), name='importxl_page'),
     path('importxl_all/', ImportExelAll_page.as_view(), name='importxl_all'),
     path('smtpmail/', SMTP_mail.as_view(), name='smtp_mail'),
-    path('exportdata/', Exportdata_page.as_view(), name='exportdata_page')
+    path('exportdata/', Exportdata_page.as_view(), name='exportdata_page'),
+    path('searchcatalog/', Searchcatalog_page.as_view(), name='searchcatalog_page'),
+    path('404_search/', NoneSearch_page.as_view(), name='nonesearch_page'),
 ]

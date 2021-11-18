@@ -40,7 +40,7 @@ class Orders(models.Model):
     class Meta:
         verbose_name_plural = 'Заказ'
         verbose_name = 'Заказы'
-        ordering = ('id',)
+        ordering = ('data_orders',)
 
     def __int__(self) -> int:
         return self.id

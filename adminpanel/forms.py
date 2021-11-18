@@ -24,6 +24,11 @@ class Meta:
                 'placeholder': 'Поиск по № заказа',
                 'style': 'float:left;'
             }),
+            'search_catalog': forms.TextInput(attrs={
+                'class': 'form-control form-control-dark w-100',
+                'type': 'text',
+                'placeholder': 'Поиск по каталогу',
+            }),
         }
         return widget[self]
 
@@ -41,3 +46,10 @@ class Datastartend_orderForm(forms.Form):
     date_start = forms.CharField(
         max_length=150, widget=Meta.meta('date_start'))
     date_end = forms.CharField(max_length=150, widget=Meta.meta('date_end'))
+
+
+class Search_catalogForm(forms.Form):
+    """Форма поиска по каталогу или вхождению"""
+
+    search_catalog = forms.CharField(
+        max_length=150, widget=Meta.meta('search_catalog'))

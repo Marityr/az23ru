@@ -5,13 +5,13 @@ from django.http import JsonResponse
 from django.shortcuts import HttpResponse, redirect, render
 from django.views import View
 
-from adminpanel.models import Orders, Product
+from adminpanel.models import Orders, Product, Number_catalog
 from services.importxl.importxl import Importxl
 from services.jobjson.dumpjson import Json_joob
 from services.smtp.mailsmtp import mail_smtp
 from services.exportxlsx.exportxlsx import Export_file
 
-from .forms import Datastartend_orderForm, Search_orderForm
+from .forms import Datastartend_orderForm, Search_orderForm, Search_catalogForm
 from .services.views_page import table_all
 
 
@@ -24,10 +24,12 @@ class Account_page(View):
         template = 'adminpanel/index.html'
         form_order_search = Search_orderForm()
         form_date2 = Datastartend_orderForm()
+        form_catalog = Search_catalogForm()
         context = {
             'title': 'AMAXI',
             'search_order': form_order_search,
             'form_date2': form_date2,
+            'form_catalog': form_catalog,
         }
         return render(request, template, context)
 
@@ -56,6 +58,7 @@ class Table_page(View):
         template = 'adminpanel/table.html'
         form_order_search = Search_orderForm()
         form_date = Datastartend_orderForm()
+        form_catalog = Search_catalogForm()
         orders, prod = table_all()
         context = {
             'title': 'AMAXI',
@@ -63,7 +66,7 @@ class Table_page(View):
             'products': prod,
             'search_order': form_order_search,
             'form_date': form_date,
-
+            'form_catalog': form_catalog,
         }
         return render(request, template, context)
 
@@ -76,9 +79,11 @@ class Search_order_page(View):
     def get(request, *args, **kwargs) -> render:
         template = 'adminpanel/number_order.html'
         form_order_search = Search_orderForm()
+        form_catalog = Search_catalogForm()
         context = {
             'title': 'AMAXI',
             'search_order': form_order_search,
+            'form_catalog': form_catalog,
         }
         return render(request, template, context)
 
@@ -86,25 +91,28 @@ class Search_order_page(View):
     @login_required
     def post(request, *args, **kwargs) -> render:
         template = 'adminpanel/number_order.html'
+        form_catalog = Search_catalogForm()
 
         if request.method == 'POST':
             form = Search_orderForm(request.POST)
-
             if form.is_valid():
-                try:
-                    instance = Orders.objects.get(
-                        number=form.cleaned_data['number_oder'])
-                    prod = list()
-                    prod.append(Product.objects.filter(
-                        number_order=form.cleaned_data['number_oder']))
-                    form_order_search = Search_orderForm()
-                except Orders.DoesNotExist:
-                    pass
+                number_oder = form.cleaned_data['number_oder']
+        try:
+            Orders.objects.get(number=number_oder)
+        except Orders.DoesNotExist:
+            return redirect('nonesearch_page')
+
+        prod = list()
+        prod.append(Product.objects.filter(number_order=number_oder))
+        form_order_search = Search_orderForm()
+        instance = Orders.objects.get(number=number_oder)
+
         context = {
             'title': 'AMAXI',
             'order': instance,
             'products': prod,
             'search_order': form_order_search,
+            'form_catalog': form_catalog,
         }
         return render(request, template, context)
 
@@ -135,7 +143,8 @@ class Date_oder_page(View):
 
             if form.is_valid():
                 try:
-                    print(form.cleaned_data['date_start'], form.cleaned_data['date_end'])
+                    print(form.cleaned_data['date_start'],
+                          form.cleaned_data['date_end'])
                     instance = Orders.objects.filter(
                         data_orders__range=(
                             form.cleaned_data['date_start'],
@@ -147,8 +156,8 @@ class Date_oder_page(View):
                             number_order=item.number
                         ))
                     form_date = Datastartend_orderForm()
-                except:
-                    pass
+                except Orders.DoesNotExist:
+                    redirect('nonesearch_page')
         context = {
             'title': 'AMAXI',
             'orders': instance,
@@ -180,7 +189,6 @@ class ImportExelAll_page(View):
     @staticmethod
     @login_required
     def get(request, *args, **kwargs) -> JsonResponse:
-        template = 'adminpanel/import.html'
         print('start import')
         Importxl.importxl(Orders.objects.all())
         print('end import')
@@ -234,3 +242,74 @@ class Exportdata_page(View):
         Export_file.read_data()
 
         return HttpResponse('read data')
+
+
+class Searchcatalog_page(View):
+    """Поиск по каталогу или вхождению"""
+
+    @staticmethod
+    @login_required
+    def get(request, *args, **kwargs) -> render:
+        template = 'adminpanel/searchcatalog.html'
+        form_order_search = Search_orderForm()
+        form_date2 = Datastartend_orderForm()
+        form_catalog = Search_catalogForm()
+        context = {
+            'title': 'AMAXI',
+            'search_order': form_order_search,
+            'form_date2': form_date2,
+            'form_catalog': form_catalog,
+        }
+        return render(request, template, context)
+
+    @staticmethod
+    @login_required
+    def post(request, *args, **kwargs) -> render:
+        template = 'adminpanel/searchcatalog.html'
+
+        data_form = Search_catalogForm(request.POST)
+
+        if data_form.is_valid():
+            search_catalog = data_form.cleaned_data['search_catalog']
+
+        try:
+            Number_catalog.objects.get(number_cat=search_catalog)
+            instanse = Number_catalog.objects.filter(number_cat=search_catalog)
+        except Number_catalog.DoesNotExist:
+            try:
+                Number_catalog.objects.filter(
+                    descriptions__icontains=search_catalog)
+                instanse = Number_catalog.objects.filter(
+                    descriptions__icontains=search_catalog)
+            except Number_catalog.DoesNotExist:
+                return redirect('nonesearch_page')
+
+        form_order_search = Search_orderForm()
+        form_catalog = Search_catalogForm()
+        context = {
+            'title': 'AMAXI',
+            'search_order': form_order_search,
+            'form_catalog': form_catalog,
+            'instanse': instanse,
+        }
+
+        return render(request, template, context)
+
+
+class NoneSearch_page(View):
+    """Поиск не дал результатов"""
+
+    @staticmethod
+    @login_required
+    def get(request, *args, **kwargs) -> render:
+        template = 'adminpanel/404_search.html'
+        form_order_search = Search_orderForm()
+        form_date2 = Datastartend_orderForm()
+        form_catalog = Search_catalogForm()
+        context = {
+            'title': 'AMAXI',
+            'search_order': form_order_search,
+            'form_date2': form_date2,
+            'form_catalog': form_catalog,
+        }
+        return render(request, template, context)

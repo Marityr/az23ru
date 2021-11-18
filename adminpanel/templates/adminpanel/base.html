@@ -35,27 +35,24 @@
 <body>
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-1 col-lg-1 me-0 px-3" href="{% url 'loginpage' %}">Amaxi</a>
+        <div class="mobile_div col-md-1 col-lg-1">
+            <a class="navbar-brand col-md-1 col-lg-1 me-0 px-3" href="{% url 'loginpage' %}">Amaxi</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <form action="{% url 'searchorder_page' %}" method="post" class="form-control form-control-dark w-100 nav_form">
-            {% csrf_token %}
-            {{ search_order.number_oder }}
-            <input type="submit" value="Enter">
-        </form>
-        <form action="{% url 'searchorder_page' %}" method="post" class="form-control form-control-dark w-100 nav_form">
-            {% csrf_token %}
-            {{ search_order.number_oder }}
-            <input type="submit" value="Enter">
-        </form>
-        <div class="navbar-nav">
-            <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="{% url 'admin:logout' %}">Выход</a>
-            </div>
         </div>
+        <form action="{% url 'searchorder_page' %}" method="post" class="form-control form-control-dark w-50 nav_form">
+            {% csrf_token %}
+            {{ search_order.number_oder }}
+            <input type="submit" value="Enter">
+        </form>
+        <form action="{% url 'searchcatalog_page' %}" method="post" class="form-control form-control-dark w-50 nav_form">
+            {% csrf_token %}
+            {{ form_catalog.search_catalog }}
+            <input type="submit" value="Enter">
+        </form>
     </header>
 
     <div class="container-fluid">
@@ -76,8 +73,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{% url 'admin:logout' %}" class="nav-link">
+                                Выход
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{% url 'exportdata_page' %}" class="nav-link">
-                                Read data
+                                Read data test
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'searchcatalog_page' %}" class="nav-link">
+                                Catalog test
                             </a>
                         </li>
                     </ul>

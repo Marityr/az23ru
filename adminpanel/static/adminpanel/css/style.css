@@ -181,3 +181,53 @@ h5.damp_db {
 .import_date h5 {
     margin-bottom: 12px!important;
 }
+
+.form-control-dark {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 1);
+    border-color: rgba(108, 108, 108, 0.86);
+    }
+
+
+@media (max-width: 450px){
+
+.navbar .navbar-toggler {
+    top: 0.25rem;
+    left: 5rem!important;
+    right: auto;
+}
+
+.mobile_div {
+    width: 100%;
+display: block;
+height: 50px;
+}
+
+.navbar-dark .navbar-brand {
+    color: #fff;
+    height: 50px;
+    display: block;
+}
+main {
+    position: fixed;
+    right: 0;
+    top: 90px;
+    bottom: 0;
+    }
+.outpc {
+    display: none;
+}
+main button {
+    margin-bottom: 10px;
+    width: 100%;
+}
+.sidebar {
+    top: 3rem;
+    }
+    .navbar .form-control {
+        padding: .75rem 1rem;
+        border-width: 1px;
+        border-radius: 0;
+        font-size: 12px;
+        }
+}
