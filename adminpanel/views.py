@@ -281,6 +281,9 @@ class Searchcatalog_page(View):
                     descriptions__icontains=search_catalog)
                 instanse = Number_catalog.objects.filter(
                     descriptions__icontains=search_catalog)
+                # TODO проверить логку исключения при поиске с вхождением
+                if not instanse:
+                    return redirect('nonesearch_page')
             except Number_catalog.DoesNotExist:
                 return redirect('nonesearch_page')
 
