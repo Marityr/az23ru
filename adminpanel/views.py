@@ -72,7 +72,7 @@ class Table_page(View):
 
 
 class Search_order_page(View):
-    """Вывод результата поиска по номеру заказа"""
+    """Вывод результата поиска по номеру заказа либо номеру телефона с вхожжением"""
 
     @staticmethod
     @login_required
@@ -90,7 +90,6 @@ class Search_order_page(View):
     @staticmethod
     @login_required
     def post(request, *args, **kwargs) -> render:
-        template = 'adminpanel/number_order.html'
         form_catalog = Search_catalogForm()
 
         if request.method == 'POST':
@@ -98,22 +97,42 @@ class Search_order_page(View):
             if form.is_valid():
                 number_oder = form.cleaned_data['number_oder']
         try:
+            template = 'adminpanel/number_order.html'
             Orders.objects.get(number=number_oder)
+            prod = list()
+            prod.append(Product.objects.filter(number_order=number_oder))
+            instance = Orders.objects.get(number=number_oder)
+            form_order_search = Search_orderForm()
+            context = {
+                'title': 'AMAXI',
+                'order': instance,
+                'products': prod,
+                'search_order': form_order_search,
+                'form_catalog': form_catalog,
+            }
         except Orders.DoesNotExist:
-            return redirect('nonesearch_page')
+            # TODO переделать поиск по номеру телефона с вхождением на несколько заказов
+            try:
+                template = 'adminpanel/phone_order.html'
+                Orders.objects.filter(phone__icontains=number_oder)
+                instance = Orders.objects.filter(phone__icontains=number_oder)[:100]
+                prod = list()
+                for item in instance:
+                    prod.append(Product.objects.filter(number_order=item.number))
+                form_order_search = Search_orderForm()
+                context = {
+                    'title': 'AMAXI',
+                    'orders': instance,
+                    'products': prod,
+                    'search_order': form_order_search,
+                    'form_catalog': form_catalog,
+                }
+                if not instance:
+                    return redirect('nonesearch_page')
+            except Orders.DoesNotExist:
+                return redirect('nonesearch_page')
 
-        prod = list()
-        prod.append(Product.objects.filter(number_order=number_oder))
-        form_order_search = Search_orderForm()
-        instance = Orders.objects.get(number=number_oder)
-
-        context = {
-            'title': 'AMAXI',
-            'order': instance,
-            'products': prod,
-            'search_order': form_order_search,
-            'form_catalog': form_catalog,
-        }
+        print(template)
         return render(request, template, context)
 
 
