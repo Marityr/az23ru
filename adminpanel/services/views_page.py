@@ -16,3 +16,13 @@ def table_all() -> list:
     # prod = Product.objects.filter(number_order__in=orders_number)
 
     return orders, prod;
+
+
+def table_article() -> list:
+    """Список заказов по артиклу или вхождению оного"""
+
+    orders = Orders.objects.all()[:10]
+    orders_number = set(orders.values_list("number", flat=True))
+    prod = Product.objects.filter(number_order__in=orders_number)
+
+    return orders, prod;

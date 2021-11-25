@@ -28,7 +28,7 @@ class ProdustAdmin(admin.ModelAdmin):
         'article',
     )
     search_fields = (
-        'number_product',
+        'article',
     )
     #240030984
 

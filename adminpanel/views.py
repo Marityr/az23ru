@@ -72,7 +72,7 @@ class Table_page(View):
 
 
 class Search_order_page(View):
-    """Вывод результата поиска по номеру заказа либо номеру телефона с вхожжением"""
+    """Вывод результата поиска по номеру заказа, номеру телефона с вхождением либо артиклу позиции с вхождением"""
 
     @staticmethod
     @login_required
@@ -98,19 +98,42 @@ class Search_order_page(View):
                 number_oder = form.cleaned_data['number_oder']
         try:
             template = 'adminpanel/number_order.html'
-            Orders.objects.get(number=number_oder)
+            Product.objects.filter(article__icontains=number_oder)
+            product = Product.objects.filter(article__icontains=number_oder)
+            tpm = set(product.values_list("number_order", flat=True))
+            instance = Orders.objects.filter(number__in=tpm)
+
             prod = list()
-            prod.append(Product.objects.filter(number_order=number_oder))
-            instance = Orders.objects.get(number=number_oder)
+            for item in instance:
+                prod.append(Product.objects.filter(number_order=item.number))
             form_order_search = Search_orderForm()
             context = {
                 'title': 'AMAXI',
-                'order': instance,
+                'orders': instance,
                 'products': prod,
                 'search_order': form_order_search,
                 'form_catalog': form_catalog,
             }
-        except Orders.DoesNotExist:
+            
+            if not instance:
+                template = 'adminpanel/phone_order.html'
+                Orders.objects.filter(phone__icontains=number_oder)
+                instance = Orders.objects.filter(phone__icontains=number_oder)[:50]
+                prod = list()
+                for item in instance:
+                    prod.append(Product.objects.filter(number_order=item.number))
+                form_order_search = Search_orderForm()
+                context = {
+                    'title': 'AMAXI',
+                    'orders': instance,
+                    'products': prod,
+                    'search_order': form_order_search,
+                    'form_catalog': form_catalog,
+                }
+                if not instance:
+                    return redirect('nonesearch_page')
+            return render(request, template, context)
+        except Product.DoesNotExist:
             # TODO переделать поиск по номеру телефона с вхождением на несколько заказов
             try:
                 template = 'adminpanel/phone_order.html'
