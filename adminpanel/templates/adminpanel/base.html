@@ -46,12 +46,16 @@
         <form action="{% url 'searchorder_page' %}" method="post" class="form-control form-control-dark w-50 nav_form">
             {% csrf_token %}
             {{ search_order.number_oder }}
-            <input type="submit" value="Enter">
+            <button type="submit" class="btn">
+                <i class="bi bi-search"></i>
+            </button>
         </form>
         <form action="{% url 'searchcatalog_page' %}" method="post" class="form-control form-control-dark w-50 nav_form">
             {% csrf_token %}
             {{ form_catalog.search_catalog }}
-            <input type="submit" value="Enter">
+            <button type="submit" class="btn">
+                <i class="bi bi-search"></i>
+            </button>
         </form>
     </header>
 

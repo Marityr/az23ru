@@ -134,7 +134,6 @@ class Search_order_page(View):
                     return redirect('nonesearch_page')
             return render(request, template, context)
         except Product.DoesNotExist:
-            # TODO переделать поиск по номеру телефона с вхождением на несколько заказов
             try:
                 template = 'adminpanel/phone_order.html'
                 Orders.objects.filter(phone__icontains=number_oder)

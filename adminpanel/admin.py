@@ -17,6 +17,9 @@ class OrdersAdmin(admin.ModelAdmin):
         'data_orders',
         'update_date',
     )
+    search_fields = (
+        'phone',
+    )
 
 
 class ProdustAdmin(admin.ModelAdmin):

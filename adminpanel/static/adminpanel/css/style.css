@@ -70,14 +70,14 @@ form.nav_form {
     position: relative;
 }
 
-form input[type='submit'] {
+form button[type='submit'] {
     position: absolute;
     top: 0px;
     display: block;
     right: 0;
     padding: 10px 30px;
-    border: 2px solid #4c4f53;
-    visibility: hidden !important;
+    border: 0px;
+    border-radius: 0;
 }
 
 main {

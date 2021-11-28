@@ -10,18 +10,18 @@ class Meta:
             'number_oder': forms.TextInput(attrs={
                 'class': 'form-control form-control-dark w-100',
                 'type': 'text',
-                'placeholder': 'Поиск по № заказа'
+                'placeholder': 'Поиск по заказам'
             }),
             'date_start': forms.TextInput(attrs={
                 'class': 'form-control form-control-dark w-50',
                 'type': 'date',
-                'placeholder': 'Поиск по № заказа',
+                'placeholder': 'Начало даты',
                 'style': 'float:left;'
             }),
             'date_end': forms.TextInput(attrs={
                 'class': 'form-control form-control-dark w-50',
                 'type': 'date',
-                'placeholder': 'Поиск по № заказа',
+                'placeholder': 'Конец даты',
                 'style': 'float:left;'
             }),
             'search_catalog': forms.TextInput(attrs={
