@@ -27,7 +27,7 @@ class Meta:
             'search_catalog': forms.TextInput(attrs={
                 'class': 'form-control form-control-dark w-100',
                 'type': 'text',
-                'placeholder': 'Поиск по каталогу',
+                'placeholder': 'Поиск по складу',
             }),
         }
         return widget[self]

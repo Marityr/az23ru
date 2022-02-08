@@ -183,7 +183,7 @@ h5.damp_db {
 }
 
 .form-control-dark {
-    color: #fff;
+    color: #000;
     background-color: rgba(255, 255, 255, 1);
     border-color: rgba(108, 108, 108, 0.86);
 }
