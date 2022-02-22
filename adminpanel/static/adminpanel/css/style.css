@@ -241,3 +241,8 @@ h5.damp_db {
         font-size: 12px;
     }
 }
+
+.user_detail_btn {
+    width: 100%;
+    margin-top: 10px;
+}

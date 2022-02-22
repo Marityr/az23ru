@@ -1,0 +1,143 @@
+{% extends 'adminpanel/base.html' %}
+{% load mathfilters %}
+
+{% block content %}
+
+<style>
+    main {
+        overflow-x: auto;
+    }
+
+    .row div {
+        margin: 0;
+        padding: 5px;
+    }
+    table{
+        padding: 25px;
+        width: 100%;
+    }
+    td, th {
+        min-width: 120px;
+    }
+</style>
+<div class="row m-2">
+    <div class="col-lg-12">
+        <p></p>
+        <div class="row">
+            <div class="card">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="card-header">
+                            ID клиента
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user_detail.userId }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card-header">
+                            Ф.И.О.
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user_detail.name }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card-header">
+                            VIN
+                        </div>
+                        <div class="card-body">
+                            {% for item in vin_number %}
+                                <h5 class="card-title">{{ item.vin }}</h5>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card-header">
+                            Мобильный
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user_detail.mobile }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card-header">
+                            E-mail
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user_detail.email }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card-header">
+                            Skype
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user_detail.skype }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card-header">
+                            город
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user_detail.sity }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card-header">
+                            Баланс
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user_detail.balance }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<table class="table table-sm table-bordered">
+    <thead>
+        <tr>
+            <th>
+                <p class="col col1">Id платежа</p>
+            </th>
+            <th>
+                <p class="col col1">Дата платежа</p>
+            </th>
+            <th>
+                <p class="col col1">Тип платежа</p>
+            </th>
+            <th>
+                <p class="col col1">Cумма</p>
+            </th>
+            <th>
+                <p class="col col1">Остаток</p>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in pymount_user %}
+        <tr>
+            <td>
+                {{ item.paymentId }}
+            </td>
+            <td>
+                {{ item.createDateTime }}
+            </td>
+            <td>
+                {{ item.paymentType }}
+            </td>
+            <td>
+                {{ item.amount }}
+            </td>
+            <td>
+                {{ item.rest }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

@@ -1,6 +1,8 @@
 import os
 import requests
 
+
+from datetime import date, datetime, timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -41,5 +43,70 @@ class Wretline_json:
         response = requests.get(Wretline_json.connect_api('managers'))
         datajson = response.json()
         return datajson
+
+    def user_details() -> list:
+        """получение данных пользователя"""
+        HOST_API = os.getenv('HOST_API')
+        USER_API = os.getenv('USER_API')
+        PASSWORD_API = os.getenv('PASSWORD_API')
+
+        conect_url = f"https://{HOST_API}/cp/users?userlogin={USER_API}&userpsw={PASSWORD_API}&desc=true"
+        response = requests.get(conect_url)
+        datajson = response.json()
+
+        return datajson
+
+    def pyment_user() -> list:
+        """получение платежей"""
+
+        HOST_API = os.getenv('HOST_API')
+        USER_API = os.getenv('USER_API')
+        PASSWORD_API = os.getenv('PASSWORD_API')
+
+        today = date.today()
+        startDate = date(today.year - 1, 1, 1)
+        endDate = date(today.year - 1, 12, 31)
+
+        conect_url = f"https://{HOST_API}/cp/finance/payments?userlogin={USER_API}&userpsw={PASSWORD_API}&createDateTimeStart={startDate}&createDateTimeEnd={endDate}"
+        response = requests.get(conect_url)
+        datajson = response.json()
+
+        return datajson
+
+    def pyment_user_this() -> list:
+        """получение платежей"""
+
+        HOST_API = os.getenv('HOST_API')
+        USER_API = os.getenv('USER_API')
+        PASSWORD_API = os.getenv('PASSWORD_API')
+
+        today = date.today()
+        startDate = date(today.year, 1, 1)
+        endDate = date(today.year, 12, 31)
+
+        conect_url = f"https://{HOST_API}/cp/finance/payments?userlogin={USER_API}&userpsw={PASSWORD_API}&createDateTimeStart={startDate}&createDateTimeEnd={endDate}"
+        response = requests.get(conect_url)
+        datajson = response.json()
+
+        return datajson
+
+    def vin_user(userId) -> list:
+        """получение платежей"""
+
+        HOST_API = os.getenv('HOST_API')
+        USER_API = os.getenv('USER_API')
+        PASSWORD_API = os.getenv('PASSWORD_API')
+
+        id_user = userId
+        conect_url = f"https://{HOST_API}/user/garage?userlogin={USER_API}&userpsw={PASSWORD_API}&userId={id_user}"
+        response = requests.get(conect_url)
+        datajson = response.json()
+
+        print(conect_url)
+
+        return datajson
+
+
+    
 
     

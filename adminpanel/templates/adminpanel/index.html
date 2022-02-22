@@ -16,26 +16,46 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">Выгрузка последних заказов</h5>
-                <p class="card-text">Выводиться только последние 200 заказов. <br> Для получения большего числа стоит изменить значение в настройках либо сделать выборку по диапазону через форму вверху. После выбора даты нажмите ENTER</p>
+                <p class="card-text">Выводиться только последние 200 заказов. <br> Для получения большего числа стоит
+                    изменить значение в настройках либо сделать выборку по диапазону через форму вверху. После выбора
+                    даты нажмите ENTER</p>
                 <a href="{% url 'table_page' %}"><button class="btn btn-primary">Последние заказы</button></a>
                 <p class="card-text"><br> Для приемлемого времени ожидания формирования таблицы последних заказов в
                     настройках советуем указывать диапазон заказов в районе 50-300 заказов. Стоит помнить что у каждого
-                    заказа может присутствовать более одной позиции товара. Изменение настроек отображения советуем делать через администратора во избежание неполадок.</p>
+                    заказа может присутствовать более одной позиции товара. Изменение настроек отображения советуем
+                    делать через администратора во избежание неполадок.</p>
             </div>
             <hr>
             <div class="card-body">
-                <h5 class="card-title">Импорт EXCEL</h5>
-                <p class="card-text">Импорт в таблицу EXCEL возможен в нескольких вариантах</p>
-                <button id="import_all_button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import_all">Полный импорт</button>
-                <button id="import_date_button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import_date">Импорт по диапазону</button>
-                <button id="import_date_button" class="btn btn-success" >Импорт последних заказов</button>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h5 class="card-title">Импорт EXCEL</h5>
+                        <p class="card-text">Импорт в таблицу EXCEL возможен в нескольких вариантах</p>
+                        <button id="import_all_button" class="btn btn-success user_detail_btn" data-bs-toggle="modal"
+                            data-bs-target="#import_all">Полный импорт</button><br>
+                        <button id="import_date_button" class="btn btn-success user_detail_btn" data-bs-toggle="modal"
+                            data-bs-target="#import_date">Импорт по диапазону</button><br>
+                        <button id="import_date_button" class="btn btn-success user_detail_btn">Импорт последних заказов</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <h5 class="card-title">Поиск клиентов</h5>
+                        <p class="card-text">Поиск и вывод информации о клиентах по номеру телефона. Номер должен быть только из цифр и начинаться с цифры 7 (семь)</p>
+                        <form action="{% url 'userdatails' %}" method="post" class="form-control">
+                            {% csrf_token %}
+                            {{ form_user.user_phone_search }}
+                            <input type="submit" value="Поиск" class="btn btn-success user_detail_btn">
+                        </form>
+                    </div>
+                </div>
             </div>
             <hr>
             <div class="card-body">
                 <h5 class="card-title">Дамп данных</h5>
-                <p class="card-text">Дамп данных в БД происходит кажду. 30-ю минуту часа в автоматическом режиме. <br> Так же вы можете обновить данные в ручном режиме. Доводим до вашего сведения что
+                <p class="card-text">Дамп данных в БД происходит кажду. 30-ю минуту часа в автоматическом режиме. <br>
+                    Так же вы можете обновить данные в ручном режиме. Доводим до вашего сведения что
                     данная опреация может занять некоторое время. Обычно от 2 до 5 минут, будьте терпеливы.</p>
-                <button id="dumpjson_page" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Обновить Дамп</button>
+                <button id="dumpjson_page" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Обновить Дамп</button>
             </div>
         </div>
     </div>

@@ -29,6 +29,11 @@ class Meta:
                 'type': 'text',
                 'placeholder': 'Поиск по складу',
             }),
+            'user_phone_search': forms.TextInput(attrs={
+                'class': 'form-control form-control-dark w-100',
+                'type': 'text',
+                'placeholder': 'Поиск клиента по телефону',
+            }),
         }
         return widget[self]
 
@@ -53,3 +58,11 @@ class Search_catalogForm(forms.Form):
 
     search_catalog = forms.CharField(
         max_length=150, widget=Meta.meta('search_catalog'))
+
+
+class Search_userForm(forms.Form):
+    """Поиск информации по номеру пользователя"""
+
+    user_phone_search = forms.CharField(
+        max_length=20, widget=Meta.meta('user_phone_search')
+    )

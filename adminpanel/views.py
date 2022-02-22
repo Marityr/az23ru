@@ -11,7 +11,9 @@ from services.jobjson.dumpjson import Json_joob
 from services.smtp.mailsmtp import mail_smtp
 from services.exportxlsx.exportxlsx import Export_file
 
-from .forms import Datastartend_orderForm, Search_orderForm, Search_catalogForm
+from .forms import Datastartend_orderForm, Search_orderForm, Search_catalogForm, Search_userForm
+
+from services.jobjson.getapijson import Wretline_json
 from .services.views_page import table_all
 
 
@@ -25,11 +27,14 @@ class Account_page(View):
         form_order_search = Search_orderForm()
         form_date2 = Datastartend_orderForm()
         form_catalog = Search_catalogForm()
+        form_user = Search_userForm()
+
         context = {
             'title': 'AMAXI',
             'search_order': form_order_search,
             'form_date2': form_date2,
             'form_catalog': form_catalog,
+            'form_user': form_user,
         }
         return render(request, template, context)
 
@@ -117,14 +122,16 @@ class Search_order_page(View):
                 'search_order': form_order_search,
                 'form_catalog': form_catalog,
             }
-            
+
             if not instance:
                 template = 'adminpanel/phone_order.html'
                 Orders.objects.filter(phone__icontains=number_oder)
-                instance = Orders.objects.filter(phone__icontains=number_oder)[:50]
+                instance = Orders.objects.filter(
+                    phone__icontains=number_oder)[:50]
                 prod = list()
                 for item in instance:
-                    prod.append(Product.objects.filter(number_order=item.number))
+                    prod.append(Product.objects.filter(
+                        number_order=item.number))
                 form_order_search = Search_orderForm()
                 context = {
                     'title': 'AMAXI',
@@ -140,10 +147,12 @@ class Search_order_page(View):
             try:
                 template = 'adminpanel/phone_order.html'
                 Orders.objects.filter(phone__icontains=number_oder)
-                instance = Orders.objects.filter(phone__icontains=number_oder)[:100]
+                instance = Orders.objects.filter(
+                    phone__icontains=number_oder)[:100]
                 prod = list()
                 for item in instance:
-                    prod.append(Product.objects.filter(number_order=item.number))
+                    prod.append(Product.objects.filter(
+                        number_order=item.number))
                 form_order_search = Search_orderForm()
                 context = {
                     'title': 'AMAXI',
@@ -359,4 +368,80 @@ class NoneSearch_page(View):
             'form_date2': form_date2,
             'form_catalog': form_catalog,
         }
+        return render(request, template, context)
+
+
+class UserDeatails(View):
+    """выдача информации по пользователю"""
+
+    @staticmethod
+    @login_required
+    def get(request, *args, **kwargs) -> render:
+
+        template = 'adminpanel/userdetails.html'
+        form_order_search = Search_orderForm()
+        form_date2 = Datastartend_orderForm()
+        form_catalog = Search_catalogForm()
+
+        dataset = Wretline_json.user_details()
+
+        searsh_phone = '79181112132'
+
+        for user in dataset:
+            if user['mobile'] == searsh_phone:
+                print(
+                    user['userId']
+                )
+
+        context = {
+            'title': 'AMAXI',
+            'search_order': form_order_search,
+            'form_date2': form_date2,
+            'form_catalog': form_catalog,
+        }
+
+        return render(request, template, context)
+
+    @staticmethod
+    @login_required
+    def post(request, *args, **kwargs):
+        template = 'adminpanel/userdetails.html'
+        form_order_search = Search_orderForm()
+        form_date2 = Datastartend_orderForm()
+        form_catalog = Search_catalogForm()
+
+        dataset = Wretline_json.user_details()
+        pymount_all = Wretline_json.pyment_user()
+        pymount_all_this = Wretline_json.pyment_user_this()
+
+        data_form = Search_userForm(request.POST)
+
+        if data_form.is_valid():
+            details_all = data_form.cleaned_data['user_phone_search']
+
+            for user in dataset:
+                if user['mobile'] == details_all:
+                    user_detail = user
+
+        pymount_user = list()
+        for pymount in pymount_all_this:
+            if str(pymount['userId']) == str(user_detail['userId']):
+                pymount_user.append(pymount)
+
+        for pymount in pymount_all:
+            if str(pymount['userId']) == str(user_detail['userId']):
+                pymount_user.append(pymount)
+
+        vin_number = Wretline_json.vin_user(user_detail['userId'])
+
+        context = {
+            'title': 'AMAXI',
+            'search_order': form_order_search,
+            'form_date2': form_date2,
+            'form_catalog': form_catalog,
+            'user_detail': user_detail,
+            'pymount_user': pymount_user,
+            'vin_number': vin_number,
+        }
+
         return render(request, template, context)

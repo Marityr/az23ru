@@ -12,6 +12,7 @@ from .views import (
     Exportdata_page,
     Searchcatalog_page,
     NoneSearch_page,
+    UserDeatails,
 )
 
 
@@ -26,5 +27,6 @@ urlpatterns = [
     path('smtpmail/', SMTP_mail.as_view(), name='smtp_mail'),
     path('exportdata/', Exportdata_page.as_view(), name='exportdata_page'),
     path('searchcatalog/', Searchcatalog_page.as_view(), name='searchcatalog_page'),
+    path('userdatails/', UserDeatails.as_view(), name='userdatails'),
     path('404_search/', NoneSearch_page.as_view(), name='nonesearch_page'),
 ]
