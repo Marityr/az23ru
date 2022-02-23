@@ -102,8 +102,6 @@ class Wretline_json:
         response = requests.get(conect_url)
         datajson = response.json()
 
-        print(conect_url)
-
         return datajson
 
 
